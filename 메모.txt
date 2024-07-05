@@ -1,0 +1,82 @@
+[Spring]
+    Project : Gradle-Groovy
+    Language : Java
+    Spring Boot : 3.3.1 (Snapshot X)
+    Project Metadata
+        Group : 홈페이지명 거꾸로
+        Artifact : 임의
+        Name : 임의
+        Description : 임의
+        Package name : 임의
+        Packaging : JAR
+        Java : 17
+[IntelliJ]
+    1. 새 프로젝트
+        시스템 빌드 : GRADLE
+        Gradle DSL : Groovy
+
+    2. 스프링 기본 설정
+        0. 라이브러리 세팅
+            1. start.spring.io
+            2. 버전 체크
+            3. Dependencies에서 라이브러리 선택 (Spring Web)
+            [Explore] 에서 복사 : build.gradle
+        1. 프로젝트 폴더 순차적으로 생성 : src > main > java > 패키지 구성(web)
+            *src	:	코드 소스 파일
+            -main
+            --java
+            ---패키지	:	최상위 패키지명(웹/앱페이지의 URL 거꾸로 사용(관례))
+                    ex) com.naver
+            ----클래스 : 스프링부트를 실행하기 위해 main함수를 갖는 클래스
+                @SpringBootApplication 어노테이션 삽입 (AppStart 클래스 바로 윗줄에)
+                + main 함수 SpringApplication.run(현재클래스명.class)
+        2. 프로젝트 폴더 > build.gradle > 웹에서 복사한 코드 붙여넣기 > 그래들 변경 내용 재로드
+
+        3. 프로젝트 폴더 > resources > static
+
+JDK : 자바 개발도구
+라이브러리 : (도구) 클래스, 인터페이스 모아둔 압축파일
+프레임워크 : (틀) 프로그램 개발 위해 틀을 제공하는 프로그램
+    프레임워크[ 라이브러리[ 클래스 [ 코드]]]
+
+Spring : 자바 쓰는 라이브러리들로 만든 프레임워크/프로그램
+Spring Boot : Spring 세팅을 간소화/자동화
+	- Spring Web - Spring batch 등 세팅 손쉽게 제공
+프로젝트 :
+    HTML/CSS/JS VSCODE 프로젝트 : JAVA
+        Gradle : 그루비를 이용한 빌드 자동화 시스템
+            Groovy : JAVA 기반 객체지향 언어
+            - 외부 라이브러리/프레임워크 설치해주고 관리해주는 프로그램
+            IntellijJ 커뮤니티 에디션은 자동 빌드 X
+
+자동화 시스템이 아니면?
+	외부 라이브러리 JAR 다운 > JAR 파일 프로젝트 내에 저장 > jar파일 오른쪽 클릭 > 프로젝트에 등록
+		e.g. mysql-connector-j-8.4.0
+	외부 라이브러리들을 아래와 그레이들 형식 코드를 통해 자동 다운로드/빌드/세팅
+		implementation 'org.springframework.boot:spring-boot-starter-web
+
+스프링 WEB 프레임워크
+	왜?? 미리 규칙/규약/세팅/법 설정, MVC모델 이미 생성
+	- ex) 협업 규칙 : 욕X, 주말 연락 X 등...
+
+[Apache Tomcat]
+    Apache + Tomcat, SPRING WEB에 포함
+    - HTML, 서블릿(클래스)들을 클라이언트로부터 요청/응답 서비스 구축 프로그램
+
+    - Apache : 서버 : HTTP 지원하는 서버(구축) 프로그램
+        - HTTP규약에 따른 통신 가능
+    - Tomcat : 서버 : JAVA 기반 서버(구축) 프로그램
+        - JSP, **Servlet(클래스) 규약에 따른 통신 가능
+
+    - Server(서비스 제공) <---> Client(서비스 요청)
+
+    - HTTP: 하이퍼텍스트 전송 프로토콜
+        - 문서 교환시 사용되는 규약(인터넷)
+        - 문서(HTML, XML, TEXT) 등
+
+@SpringBootApplication
+public class AppStart{
+    public static void main(String[] args){
+        SpringApplication.run(AppStart.class);
+    }
+}
