@@ -28,7 +28,6 @@ public class Step2 {
         System.out.println(i3.equals(i1)); // Integer는 참조타입 ->Object 상속받음
         //Integer.parseInt()
 
-        //
         //str1.clone(); // 기본적으로 clone() 메소드 사용 불가
         Object object = new Object();
         //object.clone(); // 기본적으로 clone() 메소드 사용 불가

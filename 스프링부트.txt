@@ -29,5 +29,18 @@
             메뉴 > 도움말 > 사용자 지정 VM 옵션 >
             -Dfile.encoding=UTF-8
             -Dconsole.encoding=UTF-8
-            추가
+            추가 및 재실행
+
+    - 스프링부트 프로젝트 구조
+        * 순수 JAVA프로젝트와 달리 프로젝트 패키지구조를 규칙대로 지켜야 한다
+            - 미리 정해진 규칙이므로 개발자간 협업시 유리하다 <-> 자유도가 떨어진다
+        1. src/main/java : 개발자가 만들 자바 소스파일 위치하는 패키지
+                - 상위 패키지명은 주로 웹사이트의 url을 반대로 한다
+                e.g. naver.com
+                src/main/java/com/naver/AppStart.class : 해당 스프링부트 실행하는 클래스
+        2. resources
+                /static : 정적 웹 리소스 파일 위치 패키지, 주로 HTML,CSS,JS
+                /application.properties 파일 : 프로젝트의 전반적인 설정 또는 속성
+                /templates : 동적 웹 리소스 파일 위치 패키지, JSP, ThymeLeaf, Mustache 등등
+        3. build.gradle : 라이브러리들의 의존성 설정 등 프로젝트 전반 환경설정파일
 }
