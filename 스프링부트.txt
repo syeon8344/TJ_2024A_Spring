@@ -40,7 +40,38 @@
                 src/main/java/com/naver/AppStart.class : 해당 스프링부트 실행하는 클래스
         2. resources
                 /static : 정적 웹 리소스 파일 위치 패키지, 주로 HTML,CSS,JS
+                    웹 주소 : static 이후 주소부터 (static/index.html -> localhost/index.html)
+                    /image : 이미지 파일들
                 /application.properties 파일 : 프로젝트의 전반적인 설정 또는 속성
                 /templates : 동적 웹 리소스 파일 위치 패키지, JSP, ThymeLeaf, Mustache 등등
-        3. build.gradle : 라이브러리들의 의존성 설정 등 프로젝트 전반 환경설정파일
+        3. build.gradle : 라이브러리들의 의존성 설정 등 프로젝트 전반 환경 설정 파일
+
+    - 정적 리소스 : 순수 HTML, 별도의 렌더링이 필요없다
+        - resources 하위 폴더 /static 폴더에 저장하고 사용
+        - HTML, CSS, JS, 이미지 (static/image) 등
+        - 순수 프론트엔드
+
+    - 동적 리소스 : 웹서버가 렌더링해서 클라이언트 HTML에 반환
+        - resources 하위 폴더 /templates 폴더에 저장하고 사용
+        - JSP (JSTL[JAVA] + HTML), Thymeleaf(HTML + 고유문법), Mustache(HTML + 고유문법)
+            - 프론트엔드 개발자 : HTML,CSS,JS,REACT  백엔드 개발자 : JAVA, PYTHON
+            JSP : HTML과 JAVA언어를 하나의 파일에 작성할 수 있도록 만든 템플릿
+                단점 : 프론트엔드 & 백엔드가 뒤섞여 유지보수가 어렵다
+            -> AJAX, REST API 등 사용시 협업 향상
+                - 프론트엔드 개발자 : HTML,CSS,JS,REACT <-- REST API(AJAX) --> 백엔드 개발자 : SPRING(JAVA)
+        - JAVA + HTML
+        - Spring : JSP X, Thymeleaf O, Mustache O
+        - Spring에서 JSP 사용하기
+            [1] 그레이들
+                - gradle.build dependencies에 implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+            [2] application.properties
+                spring.mvc.view.prefix = /WEB-INF/
+                spring.mvc.view.suffix = .jsp
+            [3] .jsp 파일 위치
+                - jsp 파일들은 프로젝트내 src/main/webapp/WEB-INF
+        - 수업에서 : Thymeleaf
+            [1] 그레이들
+                implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+            [2] 타임리프 파일 위치
+                resources/templates/, .html 파일
 }

@@ -18,10 +18,17 @@ repositories {
 }
 
 dependencies {
+    // [1] 스프링부트 웹 라이브러리
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    runtimeOnly 'com.mysql:mysql-connector-j' // MySQL 라이브러리
+    // [2] MySQL 라이브러리
+    runtimeOnly 'com.mysql:mysql-connector-j'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // [3] JSP 라이브러리
+    //implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+    // [4] 타임리프 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 }
 
 tasks.named('test') {
