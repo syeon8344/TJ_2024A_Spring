@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <style>
+    *{list-style-type: none;
+      }
+    body {width: 400px; margin: 0 auto; justify-content: center; text-align: center;}
+  
+
+    /*ul > li{display: flex; justify-content: space-between; padding: 20px 10px;}*/
+    ul > li{display: flex; justify-content: space-between; 
+              padding: 20px 10px;
+    }
+    li button{margin-left: 5px;}
+    ul{padding-left: 0px;}
+    input{width: 320px; height: 60px; font-size: 30px;}
+    #addbox button{width: 72px; height: 66px; 
+     font-size: 20px;  
+  }
+
+    #addbox{display: flex; justify-content: space-between;
+            margin-bottom: 40px; border-radius: 10px;}
+
+  </style>
+  
+</head>
+<body>
+  
+  <h3>My ToDo List</h3>
+  <div id="addbox">
+    <input id="item" type="text"><button onclick="uploadItem()"  type="button">등록</button>
+  </div>
+  <ul id="list">
+  </ul>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src='3_실습.js'></script>
+</body>
+</html>

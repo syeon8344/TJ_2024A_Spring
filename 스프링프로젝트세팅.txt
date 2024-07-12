@@ -92,8 +92,11 @@ Dependencies
 
 - HTTP : 하이퍼텍스트 전송 프로토콜 
 	- 문서 를 교환할때 사용되는 규약(인터넷)
-	- 문서( HTML , XML , TEXT 등 ) 
-	
+	- 문서( HTML , XML , TEXT 등 )
+
+- AJAX Latest Script
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 
 	
 

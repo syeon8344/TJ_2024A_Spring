@@ -1,0 +1,3 @@
+IP 확인 : ipconfig
+PORT 확인 : netstat -ano
+PORT 강제 종료 : taskkill /f /pid (해당 포트의 PID)

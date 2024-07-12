@@ -5,7 +5,13 @@ HTTP : 하이퍼텍스트 전송 프로토콜
     - 통신 방식
         - GET(받기, 조회), POST(보내기,저장), PUT(보내기,수정), DELETE(삭제하기,삭제)
             - 관례적으로 사용, 가독성을 위해 구분해서 사용 (GET만으로도 CRUD 구현이 가능하긴 하다)
-
+    - 통신 데이터 타입
+        Content-Type : 1.text/plain 2.application/json
+    - 데이터 전송 방법
+        [1] 쿼리스트링 이용 (GET, POST, PUT, DELETE)
+            - URL?key=value&key2=value2 : URL상의 매개변수가 노출(보안에 취약)
+        [2] BODY 이용 (POST, PUT만 가능)
+            - HTTP 본문의 데이터 작성(형식 : JSON, TEXT, XML, HTML)
 
 서블릿 : 자바를 사용해서 웹페이지를 동적으로 생성하는 서버 측 프로그램
         - 웹 서버의 성능 향상을 위해 사용하는 일종의 클래스
