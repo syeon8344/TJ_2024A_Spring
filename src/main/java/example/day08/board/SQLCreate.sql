@@ -20,3 +20,5 @@ insert into board(btitle, bcontent, bpassword) values('제목', '내용', '1234'
 insert into board(btitle, bcontent, bpassword) values('제목', '내용', '1234');
 
 select * from board;
+
+select btitle from board where bno = 2 and bpassword = '1234';

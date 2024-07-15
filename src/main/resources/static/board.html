@@ -58,14 +58,14 @@
             제목 : <input id="titleInput" type="text">
             내용 : <textarea id="contentInput"></textarea>
             비밀번호 : <input id="passwordInput" type="password">
-            <button onclick="_create()">등록</button>
+            <button onclick="boardWrite()">등록</button>
         </div>
 
         <div>
             <h3>전체 페이지</h3>
             <table>
                 <thead>
-                    <tr><th>글 번호</th><th>제목</th><th>내용</th> <th>작성일</td><th>조회수</th></tr>
+                    <tr><th>날짜</th><th>제목</th><th>조회수</th></tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
             </table>
@@ -74,7 +74,7 @@
         <div id="viewPage">
         </div>
     </div>
-
-    <script src='1_실습.js'></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src='board.js'></script>
 </body>
 </html>

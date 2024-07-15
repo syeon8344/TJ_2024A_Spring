@@ -25,15 +25,19 @@ public class BoardController {
 
     // 2-1. 상세보기출력
     @GetMapping("/day08/board/view")
-    public BoardDto boardView(int bno){
-        return BoardDao.getInstance().boardView(bno);
+    public BoardDto boardView(int bno, int bview){
+        BoardDto dto = new BoardDto();
+        dto.setBno(bno);
+        dto.setBview(bview);
+        return BoardDao.getInstance().boardView(dto);
     }
 
     // 3.글수정
     @PutMapping("/day08/board")
-    public boolean boardEdit(int bno, String bcontent){
+    public boolean boardEdit(int bno, String btitle, String bcontent){
         BoardDto dto = new BoardDto();
         dto.setBno(bno);
+        dto.setBtitle(btitle);
         dto.setBcontent(bcontent);
         return BoardDao.getInstance().boardEdit(dto);
     }
@@ -47,9 +51,11 @@ public class BoardController {
     // 5. 비밀번호확인
     @GetMapping("/day08/board/pass")
     public boolean boardCheckPassWord(int bno, String bpassword){
+        System.out.println("Checking Password");
         BoardDto dto = new BoardDto();
         dto.setBno(bno);
         dto.setBpassword(bpassword);
         return BoardDao.getInstance().boardCheckPassWord(dto);
     }
+
 }
