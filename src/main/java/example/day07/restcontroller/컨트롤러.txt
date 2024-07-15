@@ -11,12 +11,26 @@
 
         - value : 해당 메소드를 매핑할 HTTP주소 (IP PORT 생략 후 뒷부분)
         - method : RequestMethod.GET/POST/PUT/DELETE
-    [2] @RequestParam
+    [2] 각 매핑의 HTTP 메소드를 매핑해서 URL를 찾는다.
+        @GetMapping("HTTP URL주소정의")
+        @PostMapping("HTTP URL주소정의")
+        @PutMapping("HTTP URL주소정의")
+        @DeleteMapping("HTTP URL주소정의")
 
 HTTP 데이터 ()받는 방법
-    쿼리스트링 : URL?key=value&key2=value&key3=value
+    * 쿼리스트링 : URL?key=value&key2=value&key3=value
+        - url(주소)뒤에 ?부터 key(변수명) value(변수의값) & 변수구분
     [1] HttpServletRequest
         .getParameter("쿼리스트링매개변수 key값")
+    [2] @RequestParam
+        1. 쿼리스트링의 매개변수명 == 메소드 매개변수명일시 생략
+            - url?key=10 == method(int key){};
+        2. 서로의 매개변수명이 다르면 쿼리스트링 키값을 매핑할 매개변수 정의
+            - url?key=10 == method(@RequestParam("key") int math){};
+
+    * HTTP BODY 본문 ( JSON )
+    [1] @RequestBody
+        1. 쿼리스트링이 아닌 HTTP 본문(BODY) 값을 받을 때
 
 HTTP 데이터 ()응답 하는 방법
     [1] HttpServletResponse
