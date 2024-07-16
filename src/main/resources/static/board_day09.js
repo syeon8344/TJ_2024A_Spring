@@ -7,8 +7,8 @@ function boardWrite(){
     $.ajax({
         url : "/day09/board",
         method : "POST",
-        data : JSON.stringify( {btitle : btitle, bcontent : bcontent, bpassword : bpassword} ),
-        contentType : "application/json",
+        data : JSON.stringify( {btitle : btitle, bcontent : bcontent, bpassword : bpassword} ), //JSON 객체를 Stringify해서 전송
+        contentType : "application/json", //JSON 데이터 타입 명시
         success : response => {
             if (response == true){
                 console.log("boardWrite Success")

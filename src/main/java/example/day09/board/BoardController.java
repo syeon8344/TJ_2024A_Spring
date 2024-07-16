@@ -12,9 +12,9 @@ public class BoardController {
     @Autowired BoardService boardService;
     // 1.글추가
     @PostMapping
-    public boolean boardWrite( @RequestBody BoardDto boardDto ){
+    public boolean boardWrite( @RequestBody BoardDto boardDto ){ // HTML Body에서 보내는 JSON Stringify 데이터를 특정 형태로 받기
         // JSON.stringify {"key1" : "value1", "key2" : "value2"}
-        // { "btitle" : "title", "bcontent" : "content", "bpassword" : "passwd" }
+        // 예시) { "btitle" : "title", "bcontent" : "content", "bpassword" : "passwd" }
         return boardService.boardWrite(boardDto);
     }
 
