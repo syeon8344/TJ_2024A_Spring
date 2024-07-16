@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 @RestController// 해당 클래스는 스프링MVC패턴에서 Controller 역할, 스프링 컨테이너(JVM저장소) 빈(객체) 등록
+// @RequestMapping(value = "/day08/todo")
 public class TodoController {
 //    // [1] 싱글톤 패턴
 //    private static TodoController todoController = new TodoController();

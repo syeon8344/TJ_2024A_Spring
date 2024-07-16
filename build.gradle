@@ -28,9 +28,16 @@ dependencies {
     //implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
     // [4] 타임리프 라이브러리
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
+    // [5] Lombok 라이브러리
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << '-Xlint:unchecked'
+    options.deprecation = true
 }

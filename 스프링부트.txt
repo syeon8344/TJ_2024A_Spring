@@ -74,4 +74,10 @@
                 implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
             [2] 타임리프 파일 위치
                 resources/templates/, .html 파일
-}
+[p.292] 7/16
+스프링 웹 MVC
+    서비스 사용?
+        - 클라이언트 <===> 컨트롤러 <===> 서비스 <===> DAO <===> DB
+        - 컨트롤러를 요청 처리에 대한 흐름 제어만 하도록 한다
+        - @Controller, @Service, @Repository
+            컨트롤러      서비스       DAO

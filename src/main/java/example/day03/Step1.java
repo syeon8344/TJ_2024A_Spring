@@ -1,7 +1,5 @@
 package example.day03;
 
-import java.sql.SQLOutput;
-
 class Book{ // 자동으로 extends Object
     // 멤버변수
     int bookNumber;

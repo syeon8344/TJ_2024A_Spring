@@ -1,9 +1,7 @@
 package example.day07.todo;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 @RestController

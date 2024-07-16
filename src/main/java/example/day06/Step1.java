@@ -12,7 +12,7 @@ public class Step1 {
                 // - 기본타입은 클래스가 아니므로 매개변수나 메소드를 포함하지 않는다
                 // - 기본타입 데이터로 메소드/기능을 사용해야 하는 경우 (주로 타입변환)
         int val1 = 100; // 기본타입 100, 도트 연산자 사용불가
-        Integer val2 = new Integer(100); // 참조타입 100, 래퍼클래스
+        Integer val2 = 100; //Integer val2 = new Integer(100) (deprecated); 참조타입 100, 래퍼클래스
         val2.intValue(); // 도트연산자 사용가능 (참조타입, 클래스)
         
         // 자주 사용되는 메소드
@@ -98,7 +98,7 @@ public class Step1 {
         Person person2 = new Person();
         System.out.println("person2 = " + person2);
         Class pClass = Class.forName("example.day06.Person"); // try-catch 또는 클래스 throws Exception 추가
-        Person p3 = (Person)pClass.newInstance();
-        System.out.println("p3 = " + p3);
+        // Person p3 = (Person)pClass.newInstance(); // java 9부터 deprecated
+        // System.out.println("p3 = " + p3);
     }   
 }
