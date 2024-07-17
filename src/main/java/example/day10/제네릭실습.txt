@@ -1,0 +1,6 @@
+배열을 이용한 가변길이 클래스 구현, 제네릭 활용
+    - ArrayList 클래스와 같은 구조의 클래스 만들기
+    - backend/day09/step6
+    - add(저장할 값) 구현
+    - remove(index) 구현
+    - get(index) 구현
