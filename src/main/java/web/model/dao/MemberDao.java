@@ -80,11 +80,12 @@ public class MemberDao extends Dao{
             rs = ps.executeQuery();
             if(rs.next()){
                 return MemberDto.builder()
-                            .id(rs.getString("id"))
-                            .name(rs.getString("name"))
-                            .phone(rs.getString("phone"))
-                            .email(rs.getString("email"))
-                            .build();
+                        .no(rs.getInt("no"))
+                        .id(rs.getString("id"))
+                        .name(rs.getString("name"))
+                        .phone(rs.getString("phone"))
+                        .email(rs.getString("email"))
+                        .build();
             }
         }catch (Exception e){
             System.out.println("mInfo() : " + e);

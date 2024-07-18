@@ -7,6 +7,7 @@ function getMyInfo(){
         url : "/member/my/info",
         success : response => {
             if (response.id){
+                document.querySelector("#no").innerHTML = response.no
                 document.querySelector("#id").innerHTML = response.id
                 document.querySelector("#phone").innerHTML = response.phone
                 document.querySelector("#name").innerHTML = response.name
