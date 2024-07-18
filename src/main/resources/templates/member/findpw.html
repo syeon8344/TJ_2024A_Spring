@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>비밀번호 찾기</title>
+</head>
+<body>
+    <div th:replace="~{/header.html :: header }"></div>
+    <h3>비밀번호 찾기</h3><br/>
+    아이디 : <input id="id"/><br/>
+    연락처 : <input id="phone"/><br/>
+    <button type="button" onclick="findPw()">비밀번호 찾기</button><br/>
+    <div id="foundPw"></div>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/member/findpw.js"></script>
+    <div th:replace="~{/footer.html :: footer }"></div>
+</body>
+</html>

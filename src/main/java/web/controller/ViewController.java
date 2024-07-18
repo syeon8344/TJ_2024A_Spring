@@ -17,8 +17,24 @@ public class ViewController {
     public String mSignup(){
         return "/member/signup.html";
     }
+    // [3] 로그인 메뉴
     @GetMapping("/member/login")
     public String mLogin(){
         return "/member/login.html";
+    }
+    // [4] 아이디 찾기
+    @GetMapping("/member/findid")
+    public String mFindID(){
+        return "/member/findid.html";
+    }
+    // [5] 비밀번호 찾기
+    @GetMapping("/member/findpw")
+    public String mFindPw(){
+        return "/member/findpw.html";
+    }
+    // [6] 마이페이지
+    @GetMapping("/member/mypage")
+    public String mInfo(){
+        return "/member/myinfo.html";
     }
 }

@@ -3,14 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>헤더</title>
+    
 </head>
 <body>
     <div th:fragment = "header">
-        <ul>
+        <style>
+            #headerList {display: flex; list-style: none;}
+            #headerList > li {margin-right : 15px;}
+        </style>
+        <ul id="headerList">
             <li><a href="/">홈</a></li>
             <li><a href="/member/signup">회원가입</a></li>
             <li><a href="/member/login">로그인</a></li>
+            <li><a href="#" onclick="doLogOut()">로그아웃</a></li>
+            <li><a href="/member/mypage">마이페이지</a></li>
         </ul>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="/js/member/header.js"></script>
     </div>
+    
 </body>
 </html>

@@ -12,6 +12,8 @@ function login(){
             } else {
                 alert("로그인 실패")
             }
+            document.querySelector("#id").value = ""
+            document.querySelector("#pw").value = ""
         },
         error : error => {alert("HTTP 통신 오류, 관리자에게 문의 바랍니다 : " + error.responseText)}
     })

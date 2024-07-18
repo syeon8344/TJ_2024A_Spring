@@ -54,3 +54,15 @@
         ====================================
         [7] AJAX 회원가입 구현
             - 성공시 '회원가입성공', 실패시 '회원가입실패' alert 출력
+    내정보 구현
+        [1] MemberController에서 내정보 메서드
+            GET, /member/my/info
+            로그인 세션 활용
+        [2] MemberService 내정보 메서드
+        [3] MemberDao 내정보 메서드
+        ====================================
+        [4] templates --> member 폴더내 myinfo.html
+        [5] ViewController에서 해당 템플릿 매핑
+            GET /member/mypage
+        [6] header.html에서 <a>링크 연결
+        [7] ajax 구현
