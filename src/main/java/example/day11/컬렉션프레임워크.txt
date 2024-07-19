@@ -24,3 +24,53 @@
         - 3. LinkedList 클래스
             - 중간 삽입/삭제 사용시 ArrayList보다 좋은 성능 발휘
     [2] Set 인터페이스
+        - 공통점 : 순서(인덱스)가 없고 중복을 허용하지 않는다
+        - 1. HashSet 클래스
+
+        - 자주 사용되는 메서드
+            1. .add(요소) : set 객체 내 요소 추가
+            2. .size() : set 객체 내 요소 총 개수
+            3. .remove(요소) : set 객체 내 동일한 요소 삭제
+            4. .contains(요소) : 동일한 요소가 있는지 여부 true/false
+            5. .clear() : 요소 전체 삭제
+            6. .isEmpty() : set 객체 내 요소가 하나도 없으면 true
+            7. .iterator() : 반복자 인터페이스 반환
+               .hasNext() : 다음 요소가 있으면 true, 없으면 false
+               .next() : 다음 요소 호출
+
+        - Set에서 중복 제거하는 법 : 객체의 주소값을 비교해서 이미 존재하는 주소값은 저장하지 않는다
+            - 객체들은 주소값이 다르다 : 논리적으로 같은 객체여도 중복으로 추가될 수 있다
+            - 리터럴 제외한 객체들의 중복처리 및 제거
+                1. hashCode() 재정의
+                2. equals() 재정의
+                    @Override
+                    public boolean equals(Object obj) {
+                        if (obj instanceof 클래스명){
+                            클래스명 변수명 = (클래스명) obj;
+                            if(this.중복기준필드 == 변수명.중복기준필드{
+                                return true;
+                            } else {return false;}
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public int hashCode() {
+                        return 중복기준필드;
+                    }
+
+- Map
+     - 공통점 : 저장된 순서(인덱스) 없음, key-value 한 쌍 (엔트리)
+     - key 중복 불가, value 중복 가능 e.g. 'A'=1, 'B'=2, 'C'=1 ...
+     - 1. HashMap 클래스
+
+     - 자주 사용되는 메서드
+        1. .put(key, value) : key 와 value 엔트리 추가
+        2. .size() : 엔트리 갯수
+        3. .get(key) : key 값에 대응되는 value 반환
+        4. .remove(key) : key 값이 있는 엔트리 삭제
+        5. .clear() : 엔트리 삭제
+        6. .isEmpty() : 엔트리가 없으면 true
+        7. .keySet() : 모든 key 를 Set으로 반환
+        8. .values() : 모든 value 를 Collection으로 반환
+        9. .entrySet() : 모든 entry 를 Set으로 반환
