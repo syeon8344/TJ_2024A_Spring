@@ -78,4 +78,8 @@ public class MemberService {
             return memberDao.mInfo(dto.getNo());
         }
     }
+
+    public boolean idCheck(String id) {
+        return memberDao.idCheck(id);
+    }
 }

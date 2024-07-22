@@ -56,4 +56,12 @@ public class MemberController {
     public MemberDto mInfo() {
         return memberService.mInfo();
     }
+    // 8. 회원가입 아이디 중복검사
+    // 대소문자 구분 : SQL = binary(id)
+        // binary(id) = asdf != ASDF
+        // id = asdf == ASDF
+    @GetMapping("/idCheck")
+    public boolean idCheck(String id){
+        return memberService.idCheck(id);
+    }
 }

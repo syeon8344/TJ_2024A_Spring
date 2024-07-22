@@ -8,12 +8,18 @@
     <div th:replace="~{/header.html :: header }"></div>
     <h3>회원가입</h3>
     <form>
-        아이디 : <input id="id" /></br>
-        비밀번호 : <input id="pw"/></br>
-        이름 : <input id="name"/></br>
-        이메일 : <input id="email"/></br>
-        연락처 : <input id="phone"/></br>
-        <button type="button" onclick="doSignup()">회원가입</button>
+        아이디 : <input id="id" onkeyup="idCheck()"/></br>
+        <div id="idCheckBox"></div></br>
+        비밀번호 : <input type="password" onkeyup="pwCheck()" id="pw"/></br>
+        비밀번호 재입력 : <input type="password" onkeyup="pwCheck()" id="pwConfirm"/></br>
+        <div id="pwCheckBox"></div></br>
+        이름 : <input onkeyup="nameCheck()"id="name"/></br>
+        <div id="nameCheckBox"></div></br>
+        이메일 : <input onkeyup="emailCheck()"id="email"/></br>
+        <div id="emailCheckBox"></div></br>
+        연락처 : <input onkeyup="phoneCheck()"id="phone"/></br>
+        <div id="phoneCheckBox"></div></br>
+        <button type="button" onclick="idDupeCheck()">회원가입</button>
     </form>
 
     <script src="/js/member/signup.js"></script>

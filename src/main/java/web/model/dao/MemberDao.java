@@ -92,4 +92,17 @@ public class MemberDao extends Dao{
         }
         return null;
     }
+
+    public boolean idCheck(String id) {
+        try{
+            String sql = "select id from member where id = ?;";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            return rs.next();
+        }catch(Exception e){
+            System.out.println("idCheck() : " + e);
+        }
+        return false;
+    }
 }
