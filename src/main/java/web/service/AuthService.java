@@ -68,7 +68,7 @@ public class AuthService {
             MimeMessageHelper mimeMessageHelper =
                     new MimeMessageHelper(mimeMessage, true, "utf-8");
             // 3. 메일 보내는 사람
-            mimeMessageHelper.setFrom("관리자 이메일, 본인 이메일");
+            mimeMessageHelper.setFrom("dbstddusdl@naver.com");
             // 4. 메일 받는 사람
             mimeMessageHelper.setTo(toEmail);
             //  5. 메일 제목
