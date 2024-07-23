@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 탈퇴</title>
+</head>
+<body>
+    <div th:replace="~{/header.html :: header }"></div>
+    <h3>회원 탈퇴</h3>
+    회원탈퇴를 위해 비밀번호를 다시 입력해 주세요 : <input type="password" id="pwConfirm">
+    <button type="button" id="leaveBtn" onclick="delAccount()">탈퇴하기</button>
+    <script src="/js/member/leave.js"></script>
+    <div th:replace="~{/footer.html :: footer }"></div>
+</body>
+</html>

@@ -82,4 +82,22 @@ public class MemberService {
     public boolean idCheck(String id) {
         return memberDao.idCheck(id);
     }
+
+    public boolean updateInfo(MemberDto dto) {
+        HttpSession session = request.getSession();
+        MemberDto loginDto = (MemberDto) session.getAttribute("loginDto");
+        if (loginDto == null){return false;}
+        return memberDao.updateInfo(dto, loginDto.getNo());
+    }
+
+    public boolean delAccount(MemberDto dto) {
+        HttpSession session = request.getSession();
+        MemberDto loginDto = (MemberDto) session.getAttribute("loginDto");
+        if (loginDto == null){return false;}
+        if (memberDao.delAccount(dto, loginDto.getNo())){
+            session.invalidate();
+            return true;
+        }
+        return false;
+    }
 }

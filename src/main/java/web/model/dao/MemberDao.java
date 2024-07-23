@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import web.model.dto.MemberDto;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @Component
 public class MemberDao extends Dao{
@@ -102,6 +103,49 @@ public class MemberDao extends Dao{
             return rs.next();
         }catch(Exception e){
             System.out.println("idCheck() : " + e);
+        }
+        return false;
+    }
+
+    public boolean updateInfo(MemberDto dto, int no) {
+        try {
+            ArrayList<String>argList = new ArrayList<>();
+            String sql = "update member set ";
+            if (dto == null) {return false;}
+            if (dto.getName()!=null){
+                sql += "name = ?, ";
+                argList.add(dto.getName());
+            }
+            if (dto.getPhone()!=null){
+                sql += "phone = ?, ";
+                argList.add(dto.getPhone());
+            }
+            if (dto.getEmail()!=null){
+                sql += "email = ?, ";
+                argList.add(dto.getEmail());
+            }
+            sql += "no = "+no+" where no = " +no+";";
+            ps = conn.prepareStatement(sql);
+            for(int i = 0; i < argList.size(); i++){
+                ps.setString(i+1, argList.get(i));
+            }
+            int count = ps.executeUpdate();
+            return count==1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public boolean delAccount(MemberDto dto, int no) {
+        try{
+            String sql = "delete from member where no=? and pw=?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(2,dto.getPw()); ps.setInt(1,no);
+            int count = ps.executeUpdate();
+            return count==1;
+        } catch(Exception e){
+            System.out.println(e);
         }
         return false;
     }

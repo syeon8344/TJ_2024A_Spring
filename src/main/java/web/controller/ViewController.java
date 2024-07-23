@@ -37,4 +37,15 @@ public class ViewController {
     public String mInfo(){
         return "/member/myinfo.html";
     }
+
+    // [7] 회원정보수정
+    @GetMapping("/member/update")
+    public String mUpdate(){
+        return "/member/update.html";
+    }
+    // [8] 회원탈퇴
+    @GetMapping("/member/leave")
+    public String mDelete(){
+        return "/member/leave.html";
+    }
 }

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>개인정보 수정</title>
+</head>
+<body>
+    <div th:replace="~{/header.html :: header }"></div>
+    <h3>개인정보 수정하기</h3>
+    <h4>수정하지 않을 부분은 비워두시길 바랍니다.</h4>
+    <ul>
+        <li>이름 : <span id="name" disabled></span></li>
+        <li>새 이름 : <input type="text" id="newName"></li>
+        <li>연락처 : <span id="phone" disabled></span></li>
+        <li>새 연락처 : <input type="text" id="newPhone" ></li>
+        <li>이메일 : <span id="email" disabled></span></li>
+        <li>새 이메일 : <input type="text" id="newEmail"></li>
+    </ul>
+    <button type="button" id="update" onclick="updateInfo()">수정하기</button>
+    <script src="/js/member/update.js"></script>
+    <div th:replace="~{/footer.html :: footer }"></div>
+</body>
+</html>

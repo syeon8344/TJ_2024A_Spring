@@ -9,6 +9,7 @@ function login(){
         success : response => {
             if (response == true){
                 alert("로그인 성공")
+                location.href="/"
             } else {
                 alert("로그인 실패")
             }

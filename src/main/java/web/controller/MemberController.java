@@ -64,4 +64,16 @@ public class MemberController {
     public boolean idCheck(String id){
         return memberService.idCheck(id);
     }
+
+    // 9. 회원 정보 수정
+    @PutMapping("/updateInfo")
+    public boolean updateInfo(@RequestBody MemberDto dto){
+        return memberService.updateInfo(dto);
+    }
+
+    // 10. 회원 탈퇴
+    @DeleteMapping("/delAccount")
+    public boolean delAccount(@RequestBody MemberDto dto){
+        return memberService.delAccount(dto);
+    }
 }

@@ -6,8 +6,8 @@
 </head>
 <body>
     <div th:replace="~{/header.html :: header }"></div>
-    <h3>내 정보 </h3>
-    <div>
+    <h3>내 정보</h3>
+    <div id="myInfoBox">
         <ul>
             <li>회원코드 : <span id="no"></span></li>
             <li>아이디 : <span id="id"></span></li>
@@ -16,6 +16,8 @@
             <li>이메일 : <span id="email"></span></li>
         </ul>
     </div>
+    <button type="button" onclick="location.href='/member/update'">정보수정</button>
+    <button type="button" onclick="location.href='/member/leave'">삭제</button>
     <script src="/js/member/myinfo.js"></script>
     <div th:replace="~{/footer.html :: footer }"></div>
 </body>

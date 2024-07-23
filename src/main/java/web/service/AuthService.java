@@ -31,6 +31,7 @@ public class AuthService {
             }
             // 3. (선택) 저장 : DB, JVM, 세션(웹서버 저장소-브라우저마다)
             String authCode = sb.toString();
+            System.out.println("authCode : " + authCode);
             // 1. 세션 : 서버 세션의 인증 코드를 저장
             request.getSession().setAttribute("authCode", authCode);
             // 2. 서버 세션의 생명주기(세션 유지 시간 초단위)
