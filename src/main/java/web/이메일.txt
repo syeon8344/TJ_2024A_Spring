@@ -1,0 +1,14 @@
+용어
+    SMTP : Simple Mail Transfer Protocol : 간이 우편 전송 규약
+        - 이메일을 주고 받는데 사용되는 프로토콜
+    MIME : Multipurpose Internet Mail Extensions : 전자 우편 전송을 위한 표준 포맷
+
+자바에서 이메일 전송
+    1. Gradle 에서 라이브러리 dependency
+        - Java Mail Sender
+
+    2. 해당 이메일 호스트 설정
+        1. 네이버 로그인
+        2. 네이버 이메일 -> 환경설정 -> POP3/IMAP -> IMAP/SMTP 사용으로 바꾸고 저장
+
+    3. application.properties에서 호스트 설정
