@@ -1,10 +1,8 @@
 package web.service;
 
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -16,12 +14,13 @@ public class AuthService {
 
     @Autowired
     HttpServletRequest request;
+    @Autowired
     JavaMailSender mailSender;
 
     // 1. 인증번호 요청/생성
     public boolean getAuthCode(String email) {
-
         try {
+            System.out.println("email" + email);
             // 앞자리 0 포함을 위해 String
             StringBuilder sb = new StringBuilder();
             // 난수 생성 (Random 클래스)
@@ -37,7 +36,7 @@ public class AuthService {
             // 2. 서버 세션의 생명주기(세션 유지 시간 초단위)
             request.getSession().setMaxInactiveInterval(180);
             // 3. 이메일 전송
-            emailSend(email, "AAA 홈페이지의 인증코드입니다", "인증코드는 " + authCode + " 입니다.");
+            // emailSend(email, "AAA 홈페이지의 인증코드입니다", "인증코드는 " + authCode + " 입니다.");
             return true;
         } catch (Exception e) {
             return false;
@@ -49,10 +48,7 @@ public class AuthService {
         Object obj = request.getSession().getAttribute("authCode");
         // 2. 인증코드 체크 및 결과 반환
         if (obj != null) {
-            
-            System.out.println("authCodeInput = " + authCodeInput);
             String code = (String)obj;
-            System.out.println("code = " + code);
             return authCodeInput.equals(code);
         }
         return false;
@@ -65,10 +61,9 @@ public class AuthService {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             // 2. 메일 내용 구성
                 // new MimeMessageHelper(MIME 객체, 첨부파일여부, 인코딩 타입)
-            MimeMessageHelper mimeMessageHelper =
-                    new MimeMessageHelper(mimeMessage, true, "utf-8");
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "utf-8");
             // 3. 메일 보내는 사람
-            mimeMessageHelper.setFrom("dbstddusdl@naver.com");
+            mimeMessageHelper.setFrom("dbstjddusdl@naver.com");
             // 4. 메일 받는 사람
             mimeMessageHelper.setTo(toEmail);
             //  5. 메일 제목
@@ -77,7 +72,7 @@ public class AuthService {
             mimeMessageHelper.setText(content);
             // 7. ** 메일 전송
             mailSender.send(mimeMessage); // MIME 객체물 보내기
-        } catch (MessagingException e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
 
