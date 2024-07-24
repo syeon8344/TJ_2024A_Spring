@@ -60,4 +60,10 @@ public class ViewController {
     public String boardWrite(){
         return "/board/boardwrite.html";
     }
+
+    //[11] 글 상세 출력 페이지
+    @GetMapping("/board/read")
+    public String boardRead(){
+        return "/board/boardread.html";
+    }
 }
