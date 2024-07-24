@@ -18,4 +18,8 @@ public class BoardService {
         return boardDao.bAllPrint();
     }   // bAllPrint() end
 
+    // 2. 글 쓰기 카테고리 불러오기
+    public ArrayList<BoardDto> getBoardCategory() {
+        return boardDao.getBoardCategory();
+    }
 }   // class end

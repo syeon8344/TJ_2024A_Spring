@@ -34,4 +34,23 @@ public class BoardDao extends Dao{
         return list;
     }   // bAllPrint() end
 
+    public ArrayList<BoardDto> getBoardCategory() {
+        try{
+            ArrayList<BoardDto> list = new ArrayList<>();
+            String sql = "select bcname from bcategory;";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                BoardDto dto = BoardDto.builder()
+                        .bcno(rs.getInt(1))
+                        .bcname(rs.getString(2))
+                        .build();
+                list.add(dto);
+            }
+            return list;
+        }catch (Exception e){
+            System.out.println("getBoardCategory()" + e);
+        }
+        return null;
+    }
 }   // class end
