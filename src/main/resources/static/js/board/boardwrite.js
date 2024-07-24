@@ -9,17 +9,11 @@ function getCategory(){
     $.ajax({
         method:'get',
         url:"/board/getcategory",
-        success:result =>{
-            result.forEach(result =>{
+        success:(result) =>{
                 console.log(result);
-                html+=`<select>
-                    <option value="${result[0].bcno}">${result[0].bcname}</option>
-                    <option value="${result[1].bcno}">${result[1].bcname}</option>
-                    <option value="${result[2].bcno}">${result[2].bcname}</option>
-                    <option value="${result[3].bcno}">${result[3].bcname}</option>
-                    </select> `;
-
-            });
+                for(let i = 0; i < result.legnth; i++){
+                    html+=`<option value="${result[i].bcno}">${result[i].bcname}</option>`;
+                }
             category.innerHTML=html;
         }
     })
