@@ -21,4 +21,9 @@ public class BoardController {
         return boardService.bAllPrint();
     }   // bAllPrint() end
 
+    // 2. 글 쓰기 카테고리 불러오기
+    @GetMapping("/getcategory")
+    public ArrayList<BoardDto> getBoardCategory(){
+        return boardService.getBoardCategory();
+    }
 }   // class end
