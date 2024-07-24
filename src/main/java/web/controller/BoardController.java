@@ -22,7 +22,7 @@ public class BoardController {
     }   // bAllPrint() end
 
     // 2. 글 쓰기 카테고리 불러오기
-    @GetMapping("/board/getcategory")
+    @GetMapping("/getcategory")
     public ArrayList<BoardDto> getBoardCategory(){
         return boardService.getBoardCategory();
     }
