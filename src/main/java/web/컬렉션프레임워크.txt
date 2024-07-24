@@ -42,6 +42,10 @@
             - 객체들은 주소값이 다르다 : 논리적으로 같은 객체여도 중복으로 추가될 수 있다
             - 리터럴 제외한 객체들의 중복처리 및 제거
                 1. hashCode() 재정의
+                    @Override
+                    public int hashCode() {
+                        return 중복기준필드;
+                    }
                 2. equals() 재정의
                     @Override
                     public boolean equals(Object obj) {
@@ -54,10 +58,7 @@
                         return false;
                     }
 
-                    @Override
-                    public int hashCode() {
-                        return 중복기준필드;
-                    }
+
 
 - Map
      - 공통점 : 저장된 순서(인덱스) 없음, key-value 한 쌍 (엔트리)
@@ -131,13 +132,19 @@
             10. subSet(시작데이터, true/false, 끝 데이터, true/false);
         - TreeMap 클래스로 객체 사용
         - 메서드
-            - map 메서드와 메서드 동일
-            1. firstEntry() lastEntry() lowerEntry() higherEntry()
-            2. floorEntry(experts) and ceilingEntry(여담)
+            - map 메소드와 메소드 동일
+            1. firstEntry() 2.lastEntry() 3.lowerEntry(데이터) 4.higherEntry(데이터)
+            5. floorEntry(데이터) 6.ceilingEntry(데이터)
+            7. descendingMap()
+            8. tailMap( 데이터 , true/false )
+            9. headMap( 데이터 , true/false )
+            10. subMap( 시작데이터 , true/false , 끝데이터 , true/false )
 
     - 정렬기준
         - Comparable 인터페이스, Comparator 인터페이스
         - TreeSet<Generic>, TreeMap<Generic> 사용해서 Tree 자료구조를 구현
-        - 제네릭에 들어가는 타입들 : Integer, Double, String 등
-            - JAVA에서 제공되는 몇몇 클래스에는 Comparable이 이미 구현되어있다, 주로 리터럴 타입들
-            - 직접 만든 클래스는 처음에 Comparable 구현이 안 되어 있으므로 구현해야 가능
+        - 제네릭에 들어가는 타입중에 Integer , Double , String 등등 들어간다.
+            - JAVA 제공하는 몇몇 클래스에는 이미 Comparable 구현된 상태이다. 주로 리터럴 자료 타입
+            - 우리 직접 만든 클래스는 Comparable 구현이 안된 상태이다. 직접 만든 클래스도 Comparable 해야된다.
+                1. 클래스 implements Comparable< 클래스 >
+                2. @Override public int compareTo( 클래스 o){}

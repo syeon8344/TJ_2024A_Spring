@@ -4,8 +4,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import web.model.dao.MemberDao;
 import web.model.dto.MemberDto;
+
+import java.util.Map;
 
 @Service
 public class MemberService {
@@ -99,5 +102,14 @@ public class MemberService {
             return true;
         }
         return false;
+    }
+
+    // MemberDto dto vs Map<String,String> map
+    // Dto에 새 필드 추가하지 않고도 새 필드를 보낼 수 있다
+    public boolean updatePwCheck(Map<String,String> map) {
+        HttpSession session = request.getSession();
+        MemberDto loginDto = (MemberDto) session.getAttribute("loginDto");
+        if(loginDto == null){return false;}
+        return memberDao.updatePwCheck(map.get("pw"), loginDto.getNo());
     }
 }

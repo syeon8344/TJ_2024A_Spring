@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import web.model.dto.MemberDto;
 import web.service.MemberService;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/member")
 public class MemberController {
@@ -75,5 +77,11 @@ public class MemberController {
     @DeleteMapping("/delAccount")
     public boolean delAccount(@RequestBody MemberDto dto){
         return memberService.delAccount(dto);
+    }
+
+    // 11. 회원정보수정/비밀번호확인
+    @PostMapping("/update/pwCheck")
+    public boolean updatePwCheck(@RequestBody Map<String, String> map){
+        return memberService.updatePwCheck(map);
     }
 }

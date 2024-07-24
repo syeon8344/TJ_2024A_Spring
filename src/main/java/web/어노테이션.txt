@@ -16,5 +16,18 @@
     @PostMapping( "URL" )
         - 메소드 위에 사용 , 메소드와 매핑할 HTTP의 URL 정의하고 HTTP POST METHOD 방식 사용.
 
+    @Service
+        - 스프링MVC 에서 비지니스 로직( 실질적인 코드 / 주요 코드 ) 을 담당하는 클래스
+
+    @RequestBody
+        - 해당 컨트롤 클래스 메서드가 HTTP 요청 받을 떄 데이터를 JSON 파싱해서 JAVA객체(DTO, 컬렉션 프레임워크 등)로 변환
+        - HTTP request contentType = application/JSON
+        - JS에서 JSON.stringify(JSON객체)로 보내야 한다
+
+    @ResponseBody
+        - 해당 컨트롤 클래스 메서드가 HTTP 요청에 응답할 때 JAVA객체를 JSON 타입으로 반환
+        - @RestController = @Controller + @ResponseBody
+        - HTTP response contentType = application/JSON
+
 
 

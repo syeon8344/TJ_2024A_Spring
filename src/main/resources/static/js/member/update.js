@@ -20,6 +20,8 @@ function updateInfo(){
     let newName = document.querySelector("#newName").value
     let newPhone = document.querySelector("#newPhone").value
     let newEmail = document.querySelector("#newEmail").value
+    let oldPw = document.querySelector("#oldPw").value
+    let newPw = document.querySelector("#newPw").value
     let dto = {};
     if (newName != ""){
         let nameRegex = /^[가-힣]{2,20}$/
@@ -45,6 +47,17 @@ function updateInfo(){
             return;
         }
     }
+    if (oldPw != "" ){
+        if(!pwCheck()){alert("기존 비밀번호를 다시 확인해 주세요."); return;}
+        let pwRegex = /^(?=.*[A-Za-z])(?=.*[0-9])[a-zA-Z0-9]{5,30}$/
+        if (pwRegex.test(newPw)){
+            dto.pw = newPw
+        } else {
+            alert("비밀번호는 5~30글자의 영문 대소문자, 숫자여야 합니다.")
+            return;
+        }
+    }
+
     $.ajax({
         async : false,
         method : "PUT",
@@ -58,4 +71,21 @@ function updateInfo(){
             } else {alert("정보 수정 실패")}
         }
     })
+
+    // 기존 비밀번호 확인
+    function pwCheck(){
+        let dto = {"pw" : document.querySelector("#oldPw").value}
+        let result = false;
+        $.ajax({
+            async : false,
+            method : "POST",
+            url : "/member/update/pwCheck",
+            data : JSON.stringify(dto),
+            contentType : "application/json",
+            success : r => {
+                result = r;
+            }
+        })
+        return result;
+    }
 }

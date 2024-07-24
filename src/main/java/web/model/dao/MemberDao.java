@@ -124,6 +124,10 @@ public class MemberDao extends Dao{
                 sql += "email = ?, ";
                 argList.add(dto.getEmail());
             }
+            if (dto.getPw()!=null){
+                sql += "pw = ?, ";
+                argList.add(dto.getPw());
+            }
             sql += "no = "+no+" where no = " +no+";";
             ps = conn.prepareStatement(sql);
             for(int i = 0; i < argList.size(); i++){
@@ -145,6 +149,19 @@ public class MemberDao extends Dao{
             int count = ps.executeUpdate();
             return count==1;
         } catch(Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public boolean updatePwCheck(String pw, int no) {
+        try{
+            String sql = "select pw from member where pw = ? and no = ?;";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1,pw); ps.setInt(2,no);
+            rs = ps.executeQuery();
+            return rs.next();
+        }catch(Exception e){
             System.out.println(e);
         }
         return false;
