@@ -15,6 +15,8 @@ import java.util.ArrayList;
 public class BoardService {
     @Autowired
     BoardDao boardDao;
+    @Autowired
+    MemberService memberService;
 
     @Autowired // 현재 요청을 보낸 클라이언트의 HTTP 요청정보를 가지고 있는 객체를 주입
     HttpServletRequest request;
@@ -31,7 +33,7 @@ public class BoardService {
 
     // 3. 글 쓰기
     public boolean bWrite(BoardDto boardDto){
-        MemberDto loginDto=mLoginCheck();
+        MemberDto loginDto=memberService.mLoginCheck();
         int loginMno=loginDto.getNo();
         if (loginDto == null){
             return false;
@@ -39,11 +41,11 @@ public class BoardService {
     }
 
     // 로그인 체크
-    public MemberDto mLoginCheck() {
+/*    public MemberDto mLoginCheck() {
         // 1. 요청을 보낸 클라이언트의 세션 객체 호출
         HttpSession session = request.getSession();
         // 2. 세션 객체내 속성 값 호출, 타입 변환 필요(모두 Object로 저장되어 있다)
         MemberDto loginDto = (MemberDto) session.getAttribute("loginDto");
         return loginDto;
-    }
+    }*/
 }   // class end

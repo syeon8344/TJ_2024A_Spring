@@ -63,6 +63,10 @@ public class BoardDao extends Dao{
             ps.setString(2,boardDto.getBcontent());
             ps.setInt(3,loginMno);
             ps.setLong(4,boardDto.getBcno());
+            int count = ps.executeUpdate();
+            if(count==1){
+                return true;
+            }
             return true;
         }catch (Exception e){System.out.println("e = " + e);}
         return false;
