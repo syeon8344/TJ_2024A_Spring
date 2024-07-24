@@ -53,4 +53,18 @@ public class BoardDao extends Dao{
         }
         return null;
     }
+
+    // 글 쓰기
+    public boolean bWrite(BoardDto boardDto,int loginMno){
+        try {
+            String sql="insert into board(btitle,bcontent,no,bcno) values(?,?,?,?);";
+            PreparedStatement ps=conn.prepareStatement(sql);
+            ps.setString(1,boardDto.getBtitle());
+            ps.setString(2,boardDto.getBcontent());
+            ps.setInt(3,loginMno);
+            ps.setLong(4,boardDto.getBcno());
+            return true;
+        }catch (Exception e){System.out.println("e = " + e);}
+        return false;
+    }
 }   // class end

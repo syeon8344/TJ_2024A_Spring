@@ -1,9 +1,7 @@
 package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import web.model.dto.BoardDto;
 import web.service.BoardService;
 
@@ -25,5 +23,11 @@ public class BoardController {
     @GetMapping("/getcategory")
     public ArrayList<BoardDto> getBoardCategory(){
         return boardService.getBoardCategory();
+    }
+
+    // 3. 글 쓰기
+    @PostMapping("/write")
+    public boolean bWrite(@RequestBody BoardDto boardDto){
+        return boardService.bWrite(boardDto);
     }
 }   // class end
