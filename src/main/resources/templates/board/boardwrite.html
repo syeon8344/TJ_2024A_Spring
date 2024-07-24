@@ -11,13 +11,17 @@
     <div class="container">
     <h3>글쓰기 페이지</h3>
     <form class="form-control my-3">
-        <div>
-            <select id="category">
-            </select>
+        <div class="row">
+            <div class="col-3">
+                <select class="form-select" id="category">
+                </select>
+            </div>
+            <div class="col-6">
+                <span>제목</span><input class="form-control" id="btitle"/>
+            </div>
         </div>
-        제목 <input id="btitle"/></br>
-        내용 <textarea id="bcontent"></textarea></br>
-        <button onclick="_write()" type="button">쓰기</button>
+            내용 <textarea id="bcontent"></textarea></br>
+            <button onclick="_write()" type="button">쓰기</button>
     </form>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
