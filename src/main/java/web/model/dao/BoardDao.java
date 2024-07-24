@@ -71,4 +71,31 @@ public class BoardDao extends Dao{
         }catch (Exception e){System.out.println("e = " + e);}
         return false;
     }
+
+    // 4. 상세페이지
+    @GetMapping("/read")
+    public BoardDto bRead(int bno){
+        try{
+            String sql = "select * from board inner join member on board.no = member.no inner join bcategory on board.bcno = bcategory.bcno where bno = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,bno);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                BoardDto boardDto = BoardDto.builder()
+                        .bcname(rs.getString("bcname"))
+                        .bno(rs.getInt("bno"))
+                        .btitle(rs.getString("btitle"))
+                        .bcontent(rs.getString("bcontent"))
+                        .id(rs.getString("id"))
+                        .bdate(rs.getString("bdate"))
+                        .bview(rs.getInt("bview"))
+                        .build();
+                return boardDto;
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
+
 }   // class end

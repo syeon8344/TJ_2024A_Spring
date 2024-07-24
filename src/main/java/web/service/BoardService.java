@@ -40,6 +40,12 @@ public class BoardService {
         } else {return boardDao.bWrite(boardDto,loginMno);}
     }
 
+    // 4. 상세페이지
+    @GetMapping("/read")
+    public BoardDto bRead(int bno){
+        return boardDao.bRead(bno);
+    }
+
     // 로그인 체크
 /*    public MemberDto mLoginCheck() {
         // 1. 요청을 보낸 클라이언트의 세션 객체 호출
