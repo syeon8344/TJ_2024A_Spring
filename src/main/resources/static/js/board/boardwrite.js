@@ -1,6 +1,7 @@
 console.log('boardwrite.js');
 
 getCategory();
+
 function getCategory(){
     // 어디에
     let category = document.querySelector("#category");
@@ -27,6 +28,22 @@ function _write(){
     let bcontent = document.querySelector("#bcontent").value
     let bcno = document.querySelector("#category").value
     let dto = {btitle : btitle, bcontent : bcontent, bcno : bcno}
+    let login = false;
+    $.ajax({
+        async : false,
+        method : "GET",
+        url : "/member/my/info",
+        success : response => {
+            if (response.id){
+                login = true;
+            }
+        }
+    })
+    if (!login){
+        alert("로그인이 필요한 기능입니다.")
+        location.href="/member/login"
+        return;
+    }
     $.ajax({
         async : false,
         method : "POST",
