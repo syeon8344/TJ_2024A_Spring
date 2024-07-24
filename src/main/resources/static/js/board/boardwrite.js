@@ -7,13 +7,15 @@ function getCategory(){
     let html = ``;
     // 무엇을
     $.ajax({
+        async:false,
         method:'get',
         url:"/board/getcategory",
         success:(result) =>{
                 console.log(result);
-                for(let i = 0; i < result.legnth; i++){
-                    html+=`<option value="${result[i].bcno}">${result[i].bcname}</option>`;
-                }
+                result.forEach(dto =>{
+                    
+                    html+=`<option value="${dto.bcno}">${dto.bcname}</option>`;
+                })
             category.innerHTML=html;
         }
     })
