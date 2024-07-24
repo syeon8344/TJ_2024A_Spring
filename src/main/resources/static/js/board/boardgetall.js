@@ -22,3 +22,8 @@ function getall(){
     })
 
 }
+
+function boardwrite(){
+    console.log('boardwrite()');
+    location.href='/board/write';
+}
