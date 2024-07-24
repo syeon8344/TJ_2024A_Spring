@@ -54,4 +54,10 @@ public class ViewController {
     public String getAll(){
         return "/board/boardgetall.html";
     }
+
+    //[10] 글 작성 페이지
+    @GetMapping("/board/write")
+    public String boardWrite(){
+        return "/board/boardwrite.html";
+    }
 }
