@@ -13,15 +13,18 @@
     <form class="form-control my-3">
         <div class="row">
             <div class="col-3">
+                <label for="category" class="form-label">글 분류</label>
                 <select class="form-select" id="category">
                 </select>
             </div>
-            <div class="col-6">
-                <span>제목</span><input class="form-control" id="btitle"/>
+            <div class="col-9">
+                <label for="btitle" class="form-label">제목</label>
+                <input class="form-control" id="btitle"/>
             </div>
         </div>
-            내용 <textarea id="bcontent"></textarea></br>
-            <button onclick="_write()" type="button">쓰기</button>
+            <label for="bcontent "class="form-label">내용</label> 
+            <textarea class="form-control" id="bcontent"></textarea></br>
+            <button class="btn btn-primary" onclick="_write()" type="button">작성 완료</button>
     </form>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
