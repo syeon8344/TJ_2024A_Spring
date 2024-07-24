@@ -30,4 +30,13 @@ public class BoardController {
     public boolean bWrite(@RequestBody BoardDto boardDto){
         return boardService.bWrite(boardDto);
     }
+
+    // 4. 상세페이지
+    @GetMapping("/read")
+    public BoardDto bRead(int bno){
+        return boardService.bRead(bno);
+    }
+
+
+
 }   // class end
