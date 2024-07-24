@@ -10,7 +10,7 @@ function getall(){
             result.forEach(result =>{
                 html+=`<tr>
                         <th>${result.bno}</th>
-                        <td>${result.btitle}</td>
+                        <td><a href="/board/read?bno=${result.bno}" >${result.btitle}</a></td>
                         <td>${result.id}</td>
                         <td>${result.bdate}</td>
                         <td>${result.bview}</td>
@@ -21,6 +21,14 @@ function getall(){
         }
     })
 
+}
+
+function boardRead(bno){
+    console.log("bRead")
+    $.ajax({
+        method : "GET",
+        url : "/board/read?bno="+bno,
+    })
 }
 
 function boardwrite(){

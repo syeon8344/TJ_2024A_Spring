@@ -21,3 +21,7 @@ function getCategory(){
     })
 }
 
+function _write(){
+    
+}
+
