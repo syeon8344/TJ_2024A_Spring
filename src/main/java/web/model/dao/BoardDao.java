@@ -37,7 +37,7 @@ public class BoardDao extends Dao{
     public ArrayList<BoardDto> getBoardCategory() {
         try{
             ArrayList<BoardDto> list = new ArrayList<>();
-            String sql = "select bcname from bcategory;";
+            String sql = "select bcno, bcname from bcategory;";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
