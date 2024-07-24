@@ -48,9 +48,10 @@ public class ViewController {
     public String mDelete(){
         return "/member/leave.html";
     }
+
     //[9] 글전체 출력 페이지
- /*   @GetMapping("/board/getall")
+    @GetMapping("/board/getall")
     public String getAll(){
         return "/board/boardgetall.html";
-    }*/
+    }
 }
