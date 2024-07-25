@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import web.model.dto.BoardDto;
 
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class BoardDao extends Dao{
         return list;
     }   // bAllPrint() end
 
+    // 카테고리 불러오기
     public ArrayList<BoardDto> getBoardCategory() {
         try{
             ArrayList<BoardDto> list = new ArrayList<>();
@@ -57,12 +59,13 @@ public class BoardDao extends Dao{
     // 글 쓰기
     public boolean bWrite(BoardDto boardDto,int loginMno){
         try {
-            String sql="insert into board(btitle,bcontent,no,bcno) values(?,?,?,?);";
+            String sql="insert into board(btitle,bcontent,no,bcno,bfile) values(?,?,?,?,?);";
             PreparedStatement ps=conn.prepareStatement(sql);
             ps.setString(1,boardDto.getBtitle());
             ps.setString(2,boardDto.getBcontent());
             ps.setInt(3,loginMno);
             ps.setLong(4,boardDto.getBcno());
+            ps.setString(5, boardDto.getBfile());
             int count = ps.executeUpdate();
             if(count==1){
                 return true;
@@ -97,5 +100,33 @@ public class BoardDao extends Dao{
         }
         return null;
     }
-
+    
+    // 글 삭제
+    public boolean bDelete(int loginMno, int bno) {
+        try{
+            String sql = "delete from board where bno=? and no=?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,bno); ps.setInt(2, loginMno);
+            int count = ps.executeUpdate();
+            return count==1;
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
+    
+    // 글 수정
+    public boolean bEdit(int loginMno, int bno, BoardDto dto) {
+        try{
+            String sql = "update board set btitle=?, bcontent=?, bcno=? where bno=? and no=?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, dto.getBtitle()); ps.setString(2, dto.getBcontent());
+            ps.setLong(3, dto.getBcno()); ps.setInt(4, bno); ps.setInt(5, loginMno);
+            int count = ps.executeUpdate();
+            return count==1;
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
 }   // class end

@@ -61,9 +61,15 @@ public class ViewController {
         return "/board/boardwrite.html";
     }
 
-    // 11 글 상세 페이지
+    // [11] 글 상세 페이지
     @GetMapping("/board/getread")
     public String boardRead(){
         return "/board/boardread.html";
+    }
+
+    // [12] 글 수정 페이지
+    @GetMapping("/board/edit")
+    public String boardEdit(){
+        return "/board/boardedit.html";
     }
 }

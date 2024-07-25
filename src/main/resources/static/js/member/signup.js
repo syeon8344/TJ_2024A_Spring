@@ -172,7 +172,7 @@ function sendEmailAuth(){
     // 1. 인증 번호 입력 구역 구성
     let html = `<span class="timerBox">00:00</span>
                 <input type="text" class="authInput"/>
-                <button type="button" class="authInputBtn" onclick="emailAuthCheck()">인증</button>`
+                <button type="button" id="authInputBtn" class="btn btn-success" onclick="emailAuthCheck()">인증</button>`
     // 2.
     authBox.innerHTML = html
     // 3. 타이머

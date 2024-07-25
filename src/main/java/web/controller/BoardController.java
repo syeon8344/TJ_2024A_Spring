@@ -25,9 +25,15 @@ public class BoardController {
         return boardService.getBoardCategory();
     }
 
-    // 3. 글 쓰기
+//    // 3. 글 쓰기 (@RequestBody JSON String 방식)
+//    @PostMapping("/write")
+//    public boolean bWrite(@RequestBody BoardDto boardDto){
+//        return boardService.bWrite(boardDto);
+//    }
+
+    // 3-1. 글 쓰기 + 파일첨부 (formData 방식) ( @RequestBody + formData : 예외발생 )
     @PostMapping("/write")
-    public boolean bWrite(@RequestBody BoardDto boardDto){
+    public boolean bWrite(BoardDto boardDto){
         return boardService.bWrite(boardDto);
     }
 
@@ -37,6 +43,16 @@ public class BoardController {
         return boardService.bRead(bno);
     }
 
+    // 5. 글 수정
+    @PutMapping("/edit")
+    public boolean bEdit(int bno, @RequestBody BoardDto dto){
+        return boardService.bEdit(bno, dto);
+    }
+    // 6. 글 삭제
+    @DeleteMapping("/delete")
+    public boolean bDelete(int bno){
+        return boardService.bDelete(bno);
+    }
 
 
 }   // class end

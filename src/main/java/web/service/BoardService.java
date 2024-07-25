@@ -5,10 +5,12 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.multipart.MultipartFile;
 import web.model.dao.BoardDao;
 import web.model.dto.BoardDto;
 import web.model.dto.MemberDto;
 
+import java.io.File;
 import java.util.ArrayList;
 
 @Service
@@ -17,6 +19,8 @@ public class BoardService {
     BoardDao boardDao;
     @Autowired
     MemberService memberService;
+    @Autowired
+    FileService fileService;
 
     @Autowired // 현재 요청을 보낸 클라이언트의 HTTP 요청정보를 가지고 있는 객체를 주입
     HttpServletRequest request;
@@ -33,17 +37,60 @@ public class BoardService {
 
     // 3. 글 쓰기
     public boolean bWrite(BoardDto boardDto){
+        //로그인 체크
         MemberDto loginDto=memberService.mLoginCheck();
-        int loginMno=loginDto.getNo();
-        if (loginDto == null){
+        int loginMno;
+        if (loginDto == null) {
             return false;
-        } else {return boardDao.bWrite(boardDto,loginMno);}
+        } else {
+            loginMno=loginDto.getNo();
+        }
+        // 파일 업로드 처리
+        if (!boardDto.getUploadFile().isEmpty()) {
+            String uploadFileName = fileService.fileUpload(boardDto.getUploadFile());
+            // 파일 업로드 오류 여부
+            if (uploadFileName == null) {
+                return false;
+            } else {
+                // 파일 이름 DTO 등록
+                boardDto.setBfile(uploadFileName);
+            }
+        }
+        return boardDao.bWrite(boardDto,loginMno);
+//        System.out.println("multipartfile = " + mFile);
+//        System.out.println(mFile.getContentType());
+//        System.out.println(mFile.getName());
+//        System.out.println(mFile.getSize());
+//        System.out.println(mFile.isEmpty());
     }
 
     // 4. 상세페이지
-    @GetMapping("/read")
     public BoardDto bRead(int bno){
         return boardDao.bRead(bno);
+    }
+    // 5. 글 수정
+    public boolean bEdit(int bno, BoardDto dto){
+        //로그인 체크
+        MemberDto loginDto=memberService.mLoginCheck();
+        int loginMno;
+        if (loginDto == null) {
+            return false;
+        } else {
+            loginMno=loginDto.getNo();
+        }
+        return boardDao.bEdit(loginMno, bno, dto);
+    }
+    // 6. 글 삭제
+    public boolean bDelete(int bno) {
+        //로그인 체크
+        MemberDto loginDto=memberService.mLoginCheck();
+        int loginMno;
+        if (loginDto == null) {
+            return false;
+        } else {
+            loginMno=loginDto.getNo();
+        }
+        return boardDao.bDelete(loginMno, bno);
     }
 
     // 로그인 체크

@@ -24,6 +24,18 @@ AJAX
             - 쿼리스트링 : url?key=value&key&value
         4. data : { key : value , key : value }                   : HTTP 보낼 데이터
         5. contentType : ""                                      : HTTP 보낼 데이터의 타입/형식
-            - 기본값/생략시 : application/x-www-form-urlencoded
+            - 일반 폼 : contentType 생략 시
+                - 기본값 : application/x-www-form-urlencoded
+            - 대용량 폼 : 폼 전송시 첨부파일(대용량)타입은 multipart/form-data 활용
+                - contentType : false
+                - processData : false
+            - contentType : "application/JSON"
+                - data : JSON.stringify({ })
         6. success : ( r ) => { }                               : 통신 성공 시 실행되는 함수 -> 응답 데이터가 함수의 매개변수로 받는다,
         7. error : ( e ) => { }                                 : 통신 실패 시 실행되는 함수 -> 실패 사유가 함수의 매개변수로 받는다.
+
+    * 참고
+        HTTP 통신 필요한 이유 : HTTP는 문자열/바이트 데이터만 주고받는다
+        JSON.stringify() : JS 객체타입을 문자열타입으로 변환
+            {key : value} => "{key : value}"
+        JSON.

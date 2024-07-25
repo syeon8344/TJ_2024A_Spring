@@ -1,6 +1,7 @@
 package web.model.dto;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Builder
 @Getter @Setter @ToString
@@ -9,7 +10,11 @@ public class BoardDto {
     private long bno;           // 번호
     private String btitle;      // 제목
     private String bcontent;    // 내용
-    private String bfile;       // 첨부파일
+        // - HTML의 INPUT TYPE이 "file"일때 사용되는 인터페이스
+        // [1] 업로드시 바이트를 저장하고 있는 필드
+    private MultipartFile uploadFile;       // 첨부파일
+        // [2] DB에 저장/출력할 업로드된 파일명 필드
+    private String bfile;
     private long bview;         // 조회수
     private String bdate;       // 작성일
     // 카테고리

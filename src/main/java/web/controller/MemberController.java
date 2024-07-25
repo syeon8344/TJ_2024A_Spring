@@ -84,4 +84,5 @@ public class MemberController {
     public boolean updatePwCheck(@RequestBody Map<String, String> map){
         return memberService.updatePwCheck(map);
     }
+
 }

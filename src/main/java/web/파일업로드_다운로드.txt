@@ -1,0 +1,46 @@
+- 스트림 : 데이터가 다니는 통로의 흐름
+    - 주로 자바 외 장치와 데이터를 주고받을 때 : 키보드, 파일처리, JDBC, 네트워크 등
+
+- HTML에서 첨부파일 입력 받을 때
+    1. <input type="file" id="file" />
+    2. JS에서 첨부파일의 value 호출 : document.querySelector("#bfile").value
+        - "C:\fakepath\파일명"
+        - JS는 유저(클라이언트)의 실제 파일 경로를 얻을 수 없다 (브라우저 법/규칙)
+
+- 업로드 : 파일을 특정한 곳에 올리기
+    - 유저(클라이언트)PC/모바일의 파일을 서버(Spring 내장 Tomcat 서버)로 이동/복사
+    - 이동/복사
+        - 대용량 이동시에 HTTP는 바이트만 지원
+
+- 다운로드 : 파일을 내려받기
+
+
+1. 업로드 구현 방법
+    1. HTML : <form class="boardWriteForm">
+                  <input type="file" class="bfile"/>
+              </form>
+    2. form 전체 HTML 호출
+        JS : let boardWriteForm = document.querySelector(".boardWriteForm")
+    3. form 전체 HTML을 바이트로 변환해주는 기능이 담긴 객체로 변환
+        - new formData()
+        JS : let boardWriteFormData = new FormData( boardWriteForm );
+
+    4. AJAX 대용량 전송 필수 옵션
+        - method : post, put
+        - data : boardWriteFormData (new FormData 이름)
+        - contentType : false
+        - processData : false
+
+    5. MultipartFile
+        1. 실제 파일이름 추출
+            multipartFile.getOriginl
+* HTML form과 자바의 BoardDto 필드와 매핑시 주의할 점
+    - HTTP *name 속성과 DTO의 필드명이 동일해야 한다
+    - form 전송시 form 내의 데이터 식별할 때 name 속성의 이름으로 식별
+
+2. 자바에서 대용량 바이트의 타입
+    <input type="text" class="bfile" /> --> String 가능
+    <input type="file" class="bfile" /> --> String 불가능
+    MultipartFile 인터페이스 : Spring 제공 라이브러리
+        - 주로 대용량 바이트 파일 조작시 사용되는 인터페이스
+
