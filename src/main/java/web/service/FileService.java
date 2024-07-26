@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -73,18 +74,25 @@ public class FileService {
         try {
             // ++++++++++++++++++++ 배열을 바이트 배열로 읽어오기 +++++++++++++++++++++
             // 2-1. 파일 입력 스트림 객체 생성
-            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(downloadPath));
+            // BufferedInputStream bis = new BufferedInputStream(new FileInputStream(downloadPath));
+            FileInputStream fis = new FileInputStream(downloadPath);
             // 2-2. 파일 용량만큼 배열 선언 (여러개의 바이트가 한 파일)
             long fileSize = file.length();
             byte[] bytes = new byte[(int)fileSize];
-            bis.read(bytes); // 경로에 해당하는 파일을 바이트로 가져오기
-            bis.close();
+            fis.read(bytes); // 경로에 해당하는 파일을 바이트로 가져오기
+            fis.close();
             System.out.println(Arrays.toString(bytes));
             // +++++++++++++++++++++++ 바이트 배열을 HTTP 바이트 형식으로 응답하기 +++++++++
             // [3] HTTP 스트림으로 응답하기
             // 3-1 출력 스트림 객체 생성, new BufferedOutputStream (출력할 대상의 스트림 객체)
             //BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(downloadPath));
             ServletOutputStream sos = response.getOutputStream();
+            // HTTP 응답의 헤더 속성 추가 : .setHeader(key,value)
+                // Content-Disposition : 브라우저가 제공하는 다운로드 형식
+                // attachment;filename="다운로드에 표시할 파일명"
+                    // URLEncoder.encode() : URL 경로상의 한글을 인코딩
+            String originalFilename = filename.split("_")[1];
+            response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode(originalFilename, "UTF-8"));
             // 3-2 바이트 배열 내보내기/출력/쓰기
             sos.write(bytes);
             // 쓰고 난 후 버퍼 닫기

@@ -8,6 +8,8 @@ IntelliJ(개발자 코드) --------------- 웹서버 ( 아파치 톰캣 ) ------
                                             *톰캣 재실행시 리빌드, 배포된 서버 내 저장된 파일 삭제
 - 스트림 : 데이터가 다니는 통로의 흐름
     - 주로 자바 외 장치와 데이터를 주고받을 때 : 키보드, 파일처리, JDBC, 네트워크 등
+    - InputStream : 읽어들이는 통로, OutputStream : 내보내는 통로
+    - 버퍼 : 특정 위치로 이동하는 동안 잠시 데이터를 보관하는 메모리
 
 - HTML에서 첨부파일 입력 받을 때
     1. <input type="file" id="file" />
@@ -21,9 +23,7 @@ IntelliJ(개발자 코드) --------------- 웹서버 ( 아파치 톰캣 ) ------
         - 대용량 이동시에 HTTP는 바이트만 지원
 
 - 다운로드 : 파일을 내려받기
-    1. 클라이언트에서 파일 다운로드 요청
-    2. [서버] 해당 파일을 찾는다 (File file = new File(filepath), file.exists() boolean)
-    3. 해당 파일을 바이트 형식으로 읽어들여 배열로 저장 (이동 통로가 바이트만 지원)
+
 
 
 1. 업로드 구현 방법
@@ -54,6 +54,40 @@ IntelliJ(개발자 코드) --------------- 웹서버 ( 아파치 톰캣 ) ------
             2. 배포 톰캣 폴더 : "C:\\Users\\tj-bu-703-15\\Desktop\\TJ_2024A_Spring\\build\\resources\\main\\static\\upload\\"
         4. 업로드, 바이트로 변환된 데이터를 해당 경로에 파일로 생성
             .transferTo(File 타입 업로드 주소+파일명)
+
+2. 다운로드 구현 방법
+        ------------- 다운로드할 파일 읽어오기 ----------- 대상 : 파일
+    1. 다운로드 파일의 경로 설정
+        String downloadPath = uploadPath + filename;
+        File file = new File(downloadPath);
+    2. 해당 파일을 바이트 형식으로 읽어들여 배열로 저장 (이동 통로가 바이트만 지원)
+        [1] 파일 입력 스트림
+            FileInputStream fin = new FileInputStream(파일경로);
+        [2] 읽어올 바이트를 저장할 배열 생성
+            long fileSize = file.length();
+            byte[] bytes = new byte[(int) fileSize];
+        [3] 파일 입력 스트림 객체를 이용한 바이트 읽기
+            fin.read(bytes);
+        [4] 스트림 객체 수동 제거 (JVM도 제거 가능하지만 안전을 위해)
+            fin.close();
+       ---------------- 읽어온 바이트 내보내기 ------------ 대상 : HTTP 웹/앱
+    3. 배열에 저장된 바이트를 HTTP로 내보내기
+        [1] HTTP 응답 객체
+            @Autowired private HttpServletResponse response;
+        [2] HTTP 응답 스트림 호출
+            ServletOutputStream fout = response.getOutputStream();
+        [3] 출력할 배열 내보내기
+            fout.write(bytes)
+            fout.close();
+        [4] 스트림 객체 제거
+            fout.close();
+    4.브라우저의 다운로드 형식을 HTTP header(응답 관련 정보들이 들어있는 곳)에 보내주기
+        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("다운로드 형식에 표시될 파일명", "UTF-8"));
+
+- File 클래스 : 해당 경로의 파일을 객체화해서 다양한 메서드 제공
+    1. File file = new File(파일 경로 + 파일명) : 해당 경로의 파일 객체 생성
+    2. .exists() : 해당 경로에 파일이 존재하면 true, 없으면 false
+    3. .length() : 파일이 있으면 파일의 용량을 바이트 길이 단위로 반환(파일 용량 확인)
 
 * HTML form과 자바의 BoardDto 필드와 매핑시 주의할 점
     - HTTP *name 속성과 DTO의 필드명이 동일해야 한다

@@ -24,10 +24,8 @@ function boardRead(){ // 어디에 무엇을 {boardNo : brdNo, title : bTitle, u
         data:{bno:currentBno},
         success:result =>{
             divHTML = `
-            <div class="form-control">
             <span>글 번호 : ${result.bno} &nbsp;&nbsp;&nbsp;&nbsp; 카테고리 : ${result.bcname} &nbsp;&nbsp;&nbsp;&nbsp; 조회수 : ${result.bview}</span></br>
             <span>아이디 : ${result.id} &nbsp;&nbsp;&nbsp;&nbsp; 작성일 : ${result.bdate}</span></br>
-            <div class="form-control">
             <p>제목 : ${result.btitle}</p>
             <p>내용 : ${result.bcontent}</p>
             `
