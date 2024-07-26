@@ -16,11 +16,12 @@ public class BoardDao extends Dao{
     public ArrayList<BoardDto> bAllPrint(){
         ArrayList<BoardDto> list = new ArrayList<>();
         try{
-            String sql = "select *from board inner join member where board.no = member.no";
+            String sql = "select * from board inner join member inner join bcategory on board.no = member.no and board.bcno = bcategory.bcno;";
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 BoardDto boardDto = BoardDto.builder()
+                        .bcname(rs.getString("bcname"))
                         .bno(rs.getInt("bno"))
                         .btitle(rs.getString("btitle"))
                         .id(rs.getString("id"))
@@ -76,9 +77,9 @@ public class BoardDao extends Dao{
     }
 
     // 4. 상세페이지
-    @GetMapping("/read")
     public BoardDto bRead(int bno){
         try{
+            //select * from board b /inner join member m /inner join bcategory bc /on b.no = m.no /and b.bcno = bc.bcno...
             String sql = "select * from board inner join member on board.no = member.no inner join bcategory on board.bcno = bcategory.bcno where bno = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1,bno);
@@ -86,12 +87,14 @@ public class BoardDao extends Dao{
             if(rs.next()){
                 BoardDto boardDto = BoardDto.builder()
                         .bcname(rs.getString("bcname"))
+                        .bcno(rs.getInt("bcno"))
                         .bno(rs.getInt("bno"))
                         .btitle(rs.getString("btitle"))
                         .bcontent(rs.getString("bcontent"))
                         .id(rs.getString("id"))
                         .bdate(rs.getString("bdate"))
                         .bview(rs.getInt("bview"))
+                        .bfile(rs.getString("bfile"))
                         .build();
                 return boardDto;
             }
@@ -116,17 +119,41 @@ public class BoardDao extends Dao{
     }
     
     // 글 수정
-    public boolean bEdit(int loginMno, int bno, BoardDto dto) {
+    public boolean bEdit(int loginMno, BoardDto dto) {
         try{
             String sql = "update board set btitle=?, bcontent=?, bcno=? where bno=? and no=?;";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, dto.getBtitle()); ps.setString(2, dto.getBcontent());
-            ps.setLong(3, dto.getBcno()); ps.setInt(4, bno); ps.setInt(5, loginMno);
+            ps.setLong(3, dto.getBcno()); ps.setLong(4, dto.getBno()); ps.setInt(5, loginMno);
             int count = ps.executeUpdate();
             return count==1;
         } catch (Exception e){
             System.out.println(e);
         }
         return false;
+    }
+    // 5-1. 글 수정 권한 확인
+    public boolean bEditCheck(int loginMno, int bno) {
+        try{
+            String sql = "select bno from board where bno = ? and no = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, bno); ps.setInt(2, loginMno);
+            rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
+    // 4-1. 상세페이지 진입시 조회수 증가
+    public void bView(int bno) {
+        try{
+            String sql = "update board set bview = bview + 1 where bno=?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, bno);
+            ps.executeUpdate();
+        } catch (Exception e){
+            System.out.println(e);
+        }
     }
 }   // class end

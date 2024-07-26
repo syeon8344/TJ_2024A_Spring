@@ -43,11 +43,21 @@ public class BoardController {
         return boardService.bRead(bno);
     }
 
+    // 4-1. 상세페이지 진입시 조회수 증가
+    @PutMapping("/view")
+    public void bView(int bno){
+        boardService.bView(bno);
+    }
+    // 5-1. 글 수정 권한 확인
+    @GetMapping("/edit/check")
+    public boolean bEditCheck(int bno) {return boardService.bEditCheck(bno);}
     // 5. 글 수정
     @PutMapping("/edit")
-    public boolean bEdit(int bno, @RequestBody BoardDto dto){
-        return boardService.bEdit(bno, dto);
+    public boolean bEdit(@RequestBody BoardDto dto){
+        System.out.println(dto);
+        return boardService.bEdit(dto);
     }
+
     // 6. 글 삭제
     @DeleteMapping("/delete")
     public boolean bDelete(int bno){

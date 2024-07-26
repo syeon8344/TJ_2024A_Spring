@@ -22,3 +22,13 @@ JS 에서는 함수도 자료 타입의 종류 중 하나
     - clearInterval( 인터벌변수 );
         - 인터벌 종료 함수
         - let 변수명 = setInterval( 함수정의 , 밀리초 )
+
+    <a href="/board/view?bno=5"></a> -> bno=5 쿼리스트링
+
+URL 상의 쿼리스트링 매개변수를 JS에서 꺼내는 법
+    - JAVA Spring에서 HTTP URL상의 쿼리스트링 매개변수를 꺼내기
+        @RequestParam 이용한 쿼리스트링 매개변수 매핑
+    - JS에서 HTTP URL상의 쿼리스트링 매개변수 꺼내기
+        1. new URL(location.href) : 현재 JS가 포함된 URL경로의 정보가 담긴 객체 호출
+        2. .searchParams; : 현재 경로상의 쿼리스트링 매개변수 호출
+        3. .get(key) : 쿼리스트링 매개변수의 key에 해당하는 value 호출

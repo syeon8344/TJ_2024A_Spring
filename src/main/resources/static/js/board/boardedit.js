@@ -1,10 +1,11 @@
 //1.
 let urlParams = new URL(location.href).searchParams;
 let currentBno = parseInt(urlParams.get("bno")) //글번호
-loadPlaceholder()
-
+getCategory()
+loadText()
+console.log(currentBno);
 // 기존 글 띄우기
-function loadPlaceholder(){ 
+function loadText(){ 
     $.ajax({
         async:false,
         method:'get',
@@ -30,7 +31,6 @@ function getCategory(){
         method:'get',
         url:"/board/getcategory",
         success:(result) =>{
-                console.log(result);
                 result.forEach(dto =>{
                     html+=`<option value="${dto.bcno}">${dto.bcname}</option>`;
                 })
@@ -45,8 +45,8 @@ function _edit(){
     let newCategory = document.querySelector("#category").value
     $.ajax({
         method : "PUT",
-        url : "/board/edit?"+currentBno,
-        data : JSON.stringify({btitle : newTitle, bcontent : newContent, bcno : newCategory}),
+        url : "/board/edit",
+        data : JSON.stringify({bno : currentBno, btitle : newTitle, bcontent : newContent, bcno : newCategory}),
         contentType : "application/JSON",
         success : r => {
             if (r) {

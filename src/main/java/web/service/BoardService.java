@@ -69,7 +69,7 @@ public class BoardService {
         return boardDao.bRead(bno);
     }
     // 5. 글 수정
-    public boolean bEdit(int bno, BoardDto dto){
+    public boolean bEdit(BoardDto dto){
         //로그인 체크
         MemberDto loginDto=memberService.mLoginCheck();
         int loginMno;
@@ -78,7 +78,7 @@ public class BoardService {
         } else {
             loginMno=loginDto.getNo();
         }
-        return boardDao.bEdit(loginMno, bno, dto);
+        return boardDao.bEdit(loginMno, dto);
     }
     // 6. 글 삭제
     public boolean bDelete(int bno) {
@@ -91,6 +91,23 @@ public class BoardService {
             loginMno=loginDto.getNo();
         }
         return boardDao.bDelete(loginMno, bno);
+    }
+    // 5-1. 글 수정 권한 확인
+    public boolean bEditCheck(int bno) {
+        //로그인 체크
+        MemberDto loginDto=memberService.mLoginCheck();
+        int loginMno;
+        if (loginDto == null) {
+            return false;
+        } else {
+            loginMno=loginDto.getNo();
+        }
+        return boardDao.bEditCheck(loginMno, bno);
+    }
+
+    // 4-1. 상세페이지 진입시 조회수 증가
+    public void bView(int bno) {
+        boardDao.bView(bno);
     }
 
     // 로그인 체크

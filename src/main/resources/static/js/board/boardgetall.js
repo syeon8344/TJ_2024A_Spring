@@ -10,6 +10,7 @@ function getall(){
             result.forEach(result =>{
                 html+=`<tr>
                         <th>${result.bno}</th>
+                        <td>${result.bcname}</td>
                         <td><a href="/board/getread?bno=${result.bno}" >${result.btitle}</a></td>
                         <td>${result.id}</td>
                         <td>${result.bdate}</td>

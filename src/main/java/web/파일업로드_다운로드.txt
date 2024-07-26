@@ -1,3 +1,11 @@
+IntelliJ(개발자 코드) --------------- 웹서버 ( 아파치 톰캣 ) ------------------- 클라이언트( 브라우저/크롬 사용자 )
+  스프링 @클래스들        톰캣 실행        스프링 @클래스들
+  HTML, CSS 등       >>>AppStart>>>    HTML, CSS 등 바이트코드
+  3. 업로드된 파일 저장   <<<<<<<<<<<   2. @Controller 업로드 처리  <<<<<<<<<<<<   1.업로드 처리
+
+  3. (1.업로드된 파일 포함 재실행) >AppStart>>> <<<<2.업로드 된 파일 조회 <<<<<<<<<<<<<   1. 업로드 파일 조회
+                                              /resources/static
+                                            *톰캣 재실행시 리빌드, 배포된 서버 내 저장된 파일 삭제
 - 스트림 : 데이터가 다니는 통로의 흐름
     - 주로 자바 외 장치와 데이터를 주고받을 때 : 키보드, 파일처리, JDBC, 네트워크 등
 
@@ -13,6 +21,9 @@
         - 대용량 이동시에 HTTP는 바이트만 지원
 
 - 다운로드 : 파일을 내려받기
+    1. 클라이언트에서 파일 다운로드 요청
+    2. [서버] 해당 파일을 찾는다 (File file = new File(filepath), file.exists() boolean)
+    3. 해당 파일을 바이트 형식으로 읽어들여 배열로 저장 (이동 통로가 바이트만 지원)
 
 
 1. 업로드 구현 방법
@@ -33,12 +44,22 @@
 
     5. MultipartFile
         1. 실제 파일이름 추출
-            multipartFile.getOriginl
+            multipartFile.getOriginalFilename()
+        2. 파일 이름 정의 - 중복 파일도 식별 가능한 파일명으로
+            String uuid = UUID.randomUUID().toString();
+            String fileName = multipartFile.getOriginalFilename();
+            fileName = uuid+"_"+fileName.replaceAll("_","-")
+        3. 업로드 된 폴더 경로 (\\ = \ 탈출문자 + 경로 \) e.g. static\upload\일 때
+            1. 개발자 폴더 : "C:\\Users\\tj-bu-703-15\\Desktop\\TJ_2024A_Spring\\src\\main\\resources\\static\\upload\\"
+            2. 배포 톰캣 폴더 : "C:\\Users\\tj-bu-703-15\\Desktop\\TJ_2024A_Spring\\build\\resources\\main\\static\\upload\\"
+        4. 업로드, 바이트로 변환된 데이터를 해당 경로에 파일로 생성
+            .transferTo(File 타입 업로드 주소+파일명)
+
 * HTML form과 자바의 BoardDto 필드와 매핑시 주의할 점
     - HTTP *name 속성과 DTO의 필드명이 동일해야 한다
     - form 전송시 form 내의 데이터 식별할 때 name 속성의 이름으로 식별
 
-2. 자바에서 대용량 바이트의 타입
+* 자바에서 대용량 바이트의 타입
     <input type="text" class="bfile" /> --> String 가능
     <input type="file" class="bfile" /> --> String 불가능
     MultipartFile 인터페이스 : Spring 제공 라이브러리
