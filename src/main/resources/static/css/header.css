@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'HancomMalangMalang-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2406-1@1.0/HancomMalangMalang-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+* {
+    font-family : "HancomMalangMalang-Regular";
+    color: black;
+    list-style-type: none; /* 목록 글머리 제거 */
+    padding: 0px; margin: 0px;
+    font-size: 16px;
+}
+a {
+    text-decoration: none; color: black;
+}
+
+/* 헤더 메뉴 */
+.navMenu {
+    display:flex;
+    justify-content: space-between;
+}

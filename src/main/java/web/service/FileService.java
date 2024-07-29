@@ -15,7 +15,7 @@ import java.util.UUID;
 @Service
 public class FileService {
     // 2. 저장할 경로 만들기 (전역변수)
-    String uploadPath = "C:\\Users\\tj-bu-703-15\\Desktop\\TJ_2024A_Spring\\src\\main\\resources\\static\\upload\\";
+    String uploadPath = "C:\\Users\\tj-bu-703-06\\Desktop\\TJ_2024A_Spring\\src\\main\\resources\\static\\upload\\";
     // [1] 파일 업로드
         // 매개변수로 파일의 바이트가 저장된 MultipartFile 인터페이스
         // 업로드된 파일명 반환

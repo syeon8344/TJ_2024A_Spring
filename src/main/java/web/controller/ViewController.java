@@ -72,4 +72,10 @@ public class ViewController {
     public String boardEdit(){
         return "/board/boardedit.html";
     }
+
+    // ======== API 관련 ==============
+    @GetMapping("/api")
+    public String api(){
+        return "/api/datago.html";
+    }
 }

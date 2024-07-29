@@ -2,6 +2,13 @@ console.log('boardwrite.js');
 loginCheck();
 getCategory();
 
+$(document).ready(function() {
+    $('#summernote').summernote({
+        height : 500,
+        lang : "ko-KR"
+    });
+  });
+
 function loginCheck(){
     $.ajax({
         async : false,
