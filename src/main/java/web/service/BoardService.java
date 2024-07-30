@@ -1,17 +1,15 @@
 package web.service;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.multipart.MultipartFile;
 import web.model.dao.BoardDao;
 import web.model.dto.BoardDto;
+import web.model.dto.BoardPageDto;
 import web.model.dto.MemberDto;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class BoardService {
@@ -26,8 +24,42 @@ public class BoardService {
     HttpServletRequest request;
 
     // 1. 글 전체 출력
-    public ArrayList<BoardDto> bAllPrint(){
-        return boardDao.bAllPrint();
+    public BoardPageDto bAllPrint(BoardPageDto dto){
+        // 페이지당 표시할 게시물 수
+        int pageSize = 5; // 하나의 페이지당 10개씩 표시
+        // 페이지당 시작 레코드 번호
+        int startRow = (dto.getPage()-1) * pageSize;
+        // 전체 게시물 수
+        int totalBoardSize = boardDao.getTotalBoardSize(dto.getBcno());
+        // 전체 페이지 수 : 전체게시물수 / 페이지당게시물수
+            // e.g. 총 게시물 수 23개, 페이지당 5개 게시물 출력 : 4+1 5페이지
+        int totalPage = totalBoardSize % pageSize == 0 ? totalBoardSize / pageSize : totalBoardSize / pageSize + 1;
+        // 게세물 정보 조회
+        List<BoardDto> data = boardDao.bAllPrint(dto.getBcno(), startRow, pageSize);
+        // 페이지별 시작 버튼 번호, 끝 버튼 번호
+            // start 계산 :
+            // e.g. 총 게시물 수가 13개이고 페이지당 게시물 3개일 때 : 4페이지 + 1 =5페이지
+                                            //page        start       end       page -1   /최대버튼수    몫   *최대버튼수 , +1
+            // 1페이지 : [1] [2] [3] [4] [5]     1           1           5           0       0 / 5        0      0           1
+            // 2페이지 : [1] [2] [3] [4] [5]     2           1           5           1       1 / 5        0      0           1
+            // 3페이지 : [1] [2] [3] [4] [5]     3           1           5           2       2 / 5        0      0           1
+            // 4페이지 : [1] [2] [3] [4] [5]     4           1           5           3       3 / 5        0      0           1
+            // 5페이지 : [1] [2] [3] [4] [5]     5           1           5           4       4 / 5        0      0           1
+            // 6페이지 : [6] [7] [8] [9] [10]    6           6           10          5       5 / 5        1      5           6
+        int btnSize = 5; // 페이지당 최대 버튼 수 5개
+        int startBtn = (((dto.getPage()-1)/btnSize)*btnSize + 1); // 페이지별 시작 버튼 번호 변수
+        int endBtn = startBtn + btnSize - 1; // 페이지의 끝버튼
+        if(endBtn >= totalPage) {endBtn = totalPage;} // 끝 번호가 마지막이면
+        // 반환 객체 구성
+        BoardPageDto pageDto = BoardPageDto.builder()
+                .page(dto.getPage()) // 현재 페이지 번호
+                .totalBoardSize(totalBoardSize) // 전체 게시물 수
+                .totalPage(totalPage) // 전체 페이지 수
+                .data(data) // 조회된 게시물 목록
+                .startBtn(startBtn) // 페이지 표시되는 시작 버튼
+                .endBtn(endBtn) // 페이지에 표시되는 끝 버튼
+                .build();
+        return pageDto;
     }   // bAllPrint() end
 
     // 2. 글 쓰기 카테고리 불러오기

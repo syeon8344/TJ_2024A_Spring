@@ -1,10 +1,8 @@
 package web.model.dao;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
 import web.model.dto.BoardDto;
 
-import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -13,11 +11,18 @@ import java.util.ArrayList;
 public class BoardDao extends Dao{
 
     // 1. 글 전체 출력
-    public ArrayList<BoardDto> bAllPrint(){
+    public ArrayList<BoardDto> bAllPrint(int bcno, int startRow, int pageSize){
         ArrayList<BoardDto> list = new ArrayList<>();
         try{
-            String sql = "select * from board inner join member inner join bcategory on board.no = member.no and board.bcno = bcategory.bcno;";
+            String sql = "select * from board " +
+                    "inner join member inner join bcategory " +
+                    "on board.no = member.no and board.bcno = bcategory.bcno ";
+                    if (bcno > 0){sql += "where board.bcno="+bcno+" ";} // 전체보기면 where 생략
+                    sql += "order by board.bno desc limit ?,?;";
+
             PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, startRow); ps.setInt(2,pageSize);
+            System.out.println("psallprint = " + ps);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 BoardDto boardDto = BoardDto.builder()
@@ -36,6 +41,23 @@ public class BoardDao extends Dao{
         return list;
     }   // bAllPrint() end
 
+    // 총 페이지 수 불러오기
+    public int getTotalBoardSize(int bcno){
+        try {
+            String sql = "select count(*) from board";
+            if (bcno > 0){sql += " where bcno =?";} // bcno 0 이상 : 카테고리 선택됨
+            PreparedStatement ps = conn.prepareStatement(sql);
+            if (bcno > 0){ps.setInt(1,bcno);}
+            System.out.println("ps = " + ps);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return 0;
+    }
     // 카테고리 불러오기
     public ArrayList<BoardDto> getBoardCategory() {
         try{

@@ -3,12 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>게시판</title>
-    <style>
-        a {
-            text-decoration: none;
-            color:black;
-        }
-    </style>
 </head>
 <body>
     <div th:replace="~{/header.html :: header }"></div>
@@ -16,6 +10,13 @@
         <h3 class="my-3">게시판</h3>
         <div id="main">
             <button type="button" class="btn btn-success mb-3" onclick="boardwrite()">글쓰기</button>
+            <div id="category" class="row mb-3">
+                <div class="col-1" onclick="location.href='/board/getall'">전체</div>
+                <div class="col-1" onclick="location.href='/board/getall?cat=1'">자유</div>
+                <div class="col-1" onclick="location.href='/board/getall?cat=2'">노하우</div>
+                <div class="col-1" onclick="location.href='/board/getall?cat=3'">판매</div>
+                <div class="col-1" onclick="location.href='/board/getall?cat=4'">구매</div>
+            </div>
             <form>
                 <table class="table table-hover">
                     <thead><tr class="table-success"><th style="width: 5%">번호</th><th>구분</th><th>제목</th><th>아이디</th><th>작성일</th><th>조회수</th></tr></thead>
@@ -23,6 +24,13 @@
                     </tbody>
                 </table>
             </form>
+        </div>
+        <div class="row">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+
+                </ul>
+              </nav>
         </div>
     </div>
 

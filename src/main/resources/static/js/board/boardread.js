@@ -1,6 +1,9 @@
 //1.
 let urlParams = new URL(location.href).searchParams;
 let currentBno = parseInt(urlParams.get("bno")) //글번호
+let category = parseInt(urlParams.get("cat")) //카테고리
+let pageNo = parseInt(urlParams.get("page"))
+if (isNaN(category)){category=0}
 viewPlus();
 boardRead();
 // 1. 조회수 증가
@@ -72,3 +75,7 @@ function _delete(){
     })
 }
 
+// 뒤로 가기
+function goBack(){
+    location.href=`/board/getall?cat=${category}&page=${pageNo}`
+}
