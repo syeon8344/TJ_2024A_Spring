@@ -1,9 +1,9 @@
 //1.
 let urlParams = new URL(location.href).searchParams;
 let currentBno = parseInt(urlParams.get("bno")) //글번호
-let category = parseInt(urlParams.get("cat")) //카테고리
+//let category = parseInt(urlParams.get("cat")) //카테고리
 let pageNo = parseInt(urlParams.get("page"))
-if (isNaN(category)){category=0}
+//if (isNaN(category)){category=0}
 viewPlus();
 boardRead();
 // 1. 조회수 증가
@@ -36,12 +36,31 @@ function boardRead(){ // 어디에 무엇을 {boardNo : brdNo, title : bTitle, u
                 divHTML += `<p>첨부파일 : ${result.bfile}</p> <a href="/file/download?filename=${result.bfile}">다운로드</a>`
             }
             boardBox.innerHTML=divHTML;
-            buttonBox.innerHTML = `<button class="btn btn-success my-3" type="button" onclick="_delete()">삭제</button>
-                                   <button class="btn btn-success my-3" type="button" onclick="_edit()">수정</button>`
+            if (ownCheck()){
+                buttonBox.innerHTML = `<button class="btn btn-success my-3" type="button" onclick="_delete()">삭제</button>
+                                    <button class="btn btn-success my-3" type="button" onclick="_edit()">수정</button>`
+            }
+            
         }
         
     })
     
+}
+function ownCheck(){
+    let res = false;
+    $.ajax({
+        async : false,
+        method : "GET",
+        url : "/board/authorize",
+        data : {bno:currentBno},
+        success : r => {
+            console.log("r = " + r);
+            if (r==true){
+                res = true;
+            }
+        }
+    })
+    return res;
 }
 function _edit(){
     $.ajax({
@@ -52,7 +71,7 @@ function _edit(){
             if (!response){
                 alert("본인이 작성한 글만 수정 가능합니다.")
             } else {
-                location.href=`/board/edit?bno=${currentBno}`
+                location.href=`/board/edit?page=${pageNo}&bno=${currentBno}`
             }
         }
     })
@@ -77,5 +96,5 @@ function _delete(){
 
 // 뒤로 가기
 function goBack(){
-    location.href=`/board/getall?cat=${category}&page=${pageNo}`
+    location.href=`/board/getall?page=${pageNo}`
 }

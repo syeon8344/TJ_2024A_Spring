@@ -20,6 +20,8 @@ public class BoardController {
         System.out.println(dto);
         // 1. page : 현재 페이지 번호
         // 2. bcno : 현재 선택된 카테고리 번호
+        // 3. searchKey : 검색 조회시 사용되는 필드명
+        // 4. searchKeyword : 검색 조회시 사용되는 필드값
         return boardService.bAllPrint(dto);
     }   // bAllPrint() end
 
@@ -58,7 +60,6 @@ public class BoardController {
     // 5. 글 수정
     @PutMapping("/edit")
     public boolean bEdit(@RequestBody BoardDto dto){
-        System.out.println(dto);
         return boardService.bEdit(dto);
     }
 
@@ -68,5 +69,9 @@ public class BoardController {
         return boardService.bDelete(bno);
     }
 
-
+    // 7. 글 수정/삭제 권한
+    @GetMapping("/authorize")
+    public boolean authorize(int bno){
+        return boardService.authorize(bno);
+    }
 }   // class end

@@ -29,13 +29,13 @@ public class BoardService {
         int pageSize = 5; // 하나의 페이지당 10개씩 표시
         // 페이지당 시작 레코드 번호
         int startRow = (dto.getPage()-1) * pageSize;
-        // 전체 게시물 수
-        int totalBoardSize = boardDao.getTotalBoardSize(dto.getBcno());
+        // 전체 게시물 수 (카테고리번호별, 검색조건별)
+        int totalBoardSize = boardDao.getTotalBoardSize(dto.getBcno(), dto.getSearchKey(), dto.getSearchKeyword());
         // 전체 페이지 수 : 전체게시물수 / 페이지당게시물수
             // e.g. 총 게시물 수 23개, 페이지당 5개 게시물 출력 : 4+1 5페이지
         int totalPage = totalBoardSize % pageSize == 0 ? totalBoardSize / pageSize : totalBoardSize / pageSize + 1;
-        // 게세물 정보 조회
-        List<BoardDto> data = boardDao.bAllPrint(dto.getBcno(), startRow, pageSize);
+        // 6. 게시물 정보 조회
+        List<BoardDto> data = boardDao.bAllPrint(dto.getBcno(), startRow, pageSize, dto.getSearchKey(), dto.getSearchKeyword());
         // 페이지별 시작 버튼 번호, 끝 버튼 번호
             // start 계산 :
             // e.g. 총 게시물 수가 13개이고 페이지당 게시물 3개일 때 : 4페이지 + 1 =5페이지
@@ -50,7 +50,7 @@ public class BoardService {
         int startBtn = (((dto.getPage()-1)/btnSize)*btnSize + 1); // 페이지별 시작 버튼 번호 변수
         int endBtn = startBtn + btnSize - 1; // 페이지의 끝버튼
         if(endBtn >= totalPage) {endBtn = totalPage;} // 끝 번호가 마지막이면
-        // 반환 객체 구성
+        // 7. 반환 객체 구성
         BoardPageDto pageDto = BoardPageDto.builder()
                 .page(dto.getPage()) // 현재 페이지 번호
                 .totalBoardSize(totalBoardSize) // 전체 게시물 수
@@ -110,6 +110,20 @@ public class BoardService {
         } else {
             loginMno=loginDto.getNo();
         }
+        // 파일 업로드 처리
+        if (!dto.getUploadFile().isEmpty()) {
+            String uploadFileName = fileService.fileUpload(dto.getUploadFile());
+            // 파일 업로드 오류 여부
+            if (uploadFileName == null) {
+                return false;
+            } else {
+                // 파일 이름 DTO 등록
+                dto.setBfile(uploadFileName);
+                // 기존 파일 삭제
+                String oldFileName = boardDao.getFileName(dto.getBno());
+                fileService.deleteFile(oldFilePath);
+            }
+        }
         return boardDao.bEdit(loginMno, dto);
     }
     // 6. 글 삭제
@@ -140,6 +154,19 @@ public class BoardService {
     // 4-1. 상세페이지 진입시 조회수 증가
     public void bView(int bno) {
         boardDao.bView(bno);
+    }
+
+    // 글 상세보기 수정/삭제 권한 확인
+    public boolean authorize(int bno) {
+        //로그인 체크
+        MemberDto loginDto=memberService.mLoginCheck();
+        int loginMno;
+        if (loginDto == null) {
+            return false;
+        } else {
+            loginMno=loginDto.getNo();
+        }
+        return boardDao.authorize(bno, loginMno);
     }
 
     // 로그인 체크

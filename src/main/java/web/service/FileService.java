@@ -102,5 +102,10 @@ public class FileService {
         }
     }
 
-    // [2] 파일 다운로드
+    // [3] 파일 삭제 (수정에서도 사용)
+    public void deleteFile(String oldFilePath){
+        File file = new File(oldFilePath);
+    }
+
+
 }

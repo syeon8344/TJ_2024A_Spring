@@ -11,18 +11,25 @@ import java.util.ArrayList;
 public class BoardDao extends Dao{
 
     // 1. 글 전체 출력
-    public ArrayList<BoardDto> bAllPrint(int bcno, int startRow, int pageSize){
+    public ArrayList<BoardDto> bAllPrint(int bcno, int startRow, int pageSize, String searchKey, String searchKeyword){
         ArrayList<BoardDto> list = new ArrayList<>();
         try{
-            String sql = "select * from board " +
-                    "inner join member inner join bcategory " +
-                    "on board.no = member.no and board.bcno = bcategory.bcno ";
-                    if (bcno > 0){sql += "where board.bcno="+bcno+" ";} // 전체보기면 where 생략
-                    sql += "order by board.bno desc limit ?,?;";
+            String sql = "select * from board " +                               // 1. 조회
+                    "inner join member inner join bcategory " +                 // 2. 조인 테이블
+                    "on board.no = member.no and board.bcno = bcategory.bcno "; // 3. on 조인조건
+                    if (bcno > 0){sql += "where board.bcno="+bcno+" ";}         // 전체보기면 where 생략
+                    if (!searchKeyword.isEmpty()){
+                        if (bcno > 0){
+                            sql += " and ";
+                        } else {
+                            sql += " where ";
+                        }
+                        sql += searchKey + " like '%" + searchKeyword + "%' ";
+                    }
+                    sql += "order by board.bno desc limit ?,?;";                // 레코드 제한
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, startRow); ps.setInt(2,pageSize);
-            System.out.println("psallprint = " + ps);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 BoardDto boardDto = BoardDto.builder()
@@ -41,14 +48,20 @@ public class BoardDao extends Dao{
         return list;
     }   // bAllPrint() end
 
-    // 총 페이지 수 불러오기
-    public int getTotalBoardSize(int bcno){
+    // 3-2. 총 페이지 수 불러오기
+    public int getTotalBoardSize(int bcno, String searchKey, String searchKeyword){
         try {
-            String sql = "select count(*) from board";
-            if (bcno > 0){sql += " where bcno =?";} // bcno 0 이상 : 카테고리 선택됨
+            String sql = "select count(*) from board inner join member on board.no = member.no";
+            if (bcno > 0){sql += " where bcno =" + bcno + " ";} // bcno 0 이상 : 카테고리 선택됨
+            if (!searchKeyword.isEmpty()){
+                if (bcno > 0){ // 전체 검색 여부
+                    sql += " and ";
+                } else {
+                    sql += " where ";
+                }
+                sql += searchKey + " like '%" + searchKeyword +"%' "; // 검색 SQL
+            }
             PreparedStatement ps = conn.prepareStatement(sql);
-            if (bcno > 0){ps.setInt(1,bcno);}
-            System.out.println("ps = " + ps);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
@@ -62,7 +75,7 @@ public class BoardDao extends Dao{
     public ArrayList<BoardDto> getBoardCategory() {
         try{
             ArrayList<BoardDto> list = new ArrayList<>();
-            String sql = "select bcno, bcname from bcategory;";
+            String sql = "select bcno, bcname from bcategory order by bcno;";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
@@ -177,5 +190,32 @@ public class BoardDao extends Dao{
         } catch (Exception e){
             System.out.println(e);
         }
+    }
+
+    public boolean authorize(int bno, int loginMno) {
+        try{
+            String sql = "select bno from board where bno=? and no=?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, bno); ps.setInt(2, loginMno);
+            rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
+    // 글 수정시 기존 첨부파일 주소 얻기
+    public String getFileName(long bno) {
+        try{
+            String sql = "select bfile from board where bno=?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setLong(1, bno);
+            rs = ps.executeQuery();
+            rs.next();
+            return rs.getString(1);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
     }
 }   // class end

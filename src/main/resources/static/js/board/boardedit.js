@@ -1,9 +1,17 @@
 //1.
 let urlParams = new URL(location.href).searchParams;
 let currentBno = parseInt(urlParams.get("bno")) //글번호
+let pageNo = parseInt(urlParams.get("page")) //글번호
 getCategory()
 loadText()
 console.log(currentBno);
+
+$(document).ready(function() {
+    $('#bcontent').summernote({
+        height : 500,
+        lang : "ko-KR"
+    });
+  });
 // 기존 글 띄우기
 function loadText(){ 
     $.ajax({
@@ -40,18 +48,19 @@ function getCategory(){
 }
 
 function _edit(){
-    let newTitle = document.querySelector("#btitle").value
-    let newContent = document.querySelector("#bcontent").value
-    let newCategory = document.querySelector("#category").value
+    // 1. form 가져오기, form 안에 있는 HTML모두 한번에 가져오기
+    let boardWriteForm = document.querySelector("#boardBox")
+    // 2. form HTML을 바이트로 변환하기
+    let boardWriteFormData = new FormData(boardWriteForm);
     $.ajax({
         method : "PUT",
         url : "/board/edit",
-        data : JSON.stringify({bno : currentBno, btitle : newTitle, bcontent : newContent, bcno : newCategory}),
-        contentType : "application/JSON",
+        data : boardWriteFormData,
+        contentType : false, processData : false,
         success : r => {
             if (r) {
                 alert("글 수정 완료!")
-                history.go(-1)
+                location.href=`/board/getread?page=${pageNo}&bno=${currentBno}`
             } else {
                 alert("글 수정 실패")
             }

@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>게시판</title>
+    <style>
+        .categoryActive{
+            color:rgb(0, 145, 84);
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <div th:replace="~{/header.html :: header }"></div>
     <div class="container">
         <h3 class="my-3">게시판</h3>
+        <!-- 카테고리 -->
         <div id="main">
             <button type="button" class="btn btn-success mb-3" onclick="boardwrite()">글쓰기</button>
-            <div id="category" class="row mb-3">
-                <div class="col-1" onclick="location.href='/board/getall'">전체</div>
-                <div class="col-1" onclick="location.href='/board/getall?cat=1'">자유</div>
-                <div class="col-1" onclick="location.href='/board/getall?cat=2'">노하우</div>
-                <div class="col-1" onclick="location.href='/board/getall?cat=3'">판매</div>
-                <div class="col-1" onclick="location.href='/board/getall?cat=4'">구매</div>
+            <div id="category" class="mb-3 d-flex">
             </div>
+            <!-- 게시판 -->
             <form>
                 <table class="table table-hover">
                     <thead><tr class="table-success"><th style="width: 5%">번호</th><th>구분</th><th>제목</th><th>아이디</th><th>작성일</th><th>조회수</th></tr></thead>
@@ -25,15 +28,30 @@
                 </table>
             </form>
         </div>
+        <!-- 페이징 -->
         <div class="row">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-
-                </ul>
-              </nav>
+            <div class="d-flex justify-content-center col-9 mx-auto">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- 게시판 -->
+        <div class="row" id="search">
+            <div class="d-flex justify-content-center col-9 mx-auto">
+                <select class="form-select" style="width:100px; height:40px" id="searchKey">
+                    <!-- value : select에서 선택한 항목의 값, SQL 조회시 사용할 필드명 -->
+                    <option value="btitle">제목</option>
+                    <option value="bcontent">내용</option>
+                    <option value="id">작성자</option>
+                </select>
+                <input class="form-control" style="width:200px; height:40px" id="searchKeyword"/> <!-- SQL 조회시 사용되는 필드값 -->
+                <button type="button" class="btn btn-sm btn-success mx-2" onclick="search()">검색</button>
+                <button type="button" class="btn btn-sm btn-success" onclick="searchClear()">초기화</button>
+            </div>
         </div>
     </div>
-
     <script src='/js/board/boardgetall.js'></script>
     <div th:replace="~{/footer.html :: footer }"></div>
 </body>

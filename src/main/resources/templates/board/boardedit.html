@@ -5,6 +5,8 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>글 수정하기</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- 이 페이지에서만 사용할 Summernote css/js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" />
 </head>
 <body>
     <div th:replace="~{/header.html :: header }"></div>
@@ -12,25 +14,29 @@
         <h3 class="my-3">글 수정하기</h3>
         <div class="col-9 mx-auto">
             <button type="button" class="btn btn-success mb-3" onclick="window.location=document.referrer;">돌아가기</button>
-            <div class="form-control" id="boardBox">
+            <form class="form-control" id="boardBox">
                 <div class="row">
                     <div class="col-3">
                         <label for="category" class="form-label">글 분류</label>
-                        <select class="form-select" id="category">
+                        <select name="bcno" class="form-select" id="category">
                         </select>
                     </div>
                     <div class="col-9">
                         <label for="btitle" class="form-label">새 제목</label>
-                        <input class="form-control" id="btitle"/>
+                        <input name="btitle" class="form-control" id="btitle"/>
                     </div>
                 </div>
                 <label for="bcontent"class="form-label">새 내용</label>
-                <textarea class="form-control" id="bcontent"></textarea></br>
-            </div>
+                <textarea name="bcontent" class="form-control" id="bcontent"></textarea></br>
+                <label for="newFile" class="form-label">새 첨부파일</label>
+                <input name="bfile" class="form-control" id="newFile" type="file"/>
+            </form>
             <button class="btn btn-success mt-3" type="button" onclick="_edit()">수정 확인</button>
         </div>
     </div>
-
+    <!--Summernote-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/lang/summernote-ko-KR.min.js" ></script>
     <script src="/js/board/boardedit.js"></script>
     <div th:replace="~{/footer.html :: footer }"></div>
 </body>

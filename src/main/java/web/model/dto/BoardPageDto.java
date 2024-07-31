@@ -18,5 +18,8 @@ public class BoardPageDto {
     private int startBtn; // 페이지별 시작버튼 번호
     private int endBtn; // 페이지별 끝버튼 번호
     private int bcno; // 현재 카테고리 번호
+    // 검색 필드
+    private String searchKey; // 검색 조회시 사용되는 필드명
+    private String searchKeyword; // 검색 조회시 사용되는 필드값
 
 }

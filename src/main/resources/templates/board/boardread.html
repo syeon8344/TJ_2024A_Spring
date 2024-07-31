@@ -5,6 +5,10 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>상세 글 보기</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!--
+        CSS 파일
+        <link rel='stylesheet' href="/css/boardread.css">
+    -->
 </head>
 <body>
     <div th:replace="~{/header.html :: header }"></div>
@@ -16,8 +20,6 @@
                 <div class="form-control" id="boardBox">
                 </div>
                 <div id="buttonBox">
-                    <button class="btn btn-success" type="button" onclick="_delete()">삭제</button>
-                    <button class="btn btn-success" type="button" onclick="_edit()">수정</button>
                 </div>
             </div>
         </div>
