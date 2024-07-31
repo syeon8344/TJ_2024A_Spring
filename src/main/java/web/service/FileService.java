@@ -103,8 +103,9 @@ public class FileService {
     }
 
     // [3] 파일 삭제 (수정에서도 사용)
-    public void deleteFile(String oldFilePath){
-        File file = new File(oldFilePath);
+    public void deleteFile(String oldFileName){
+        File file = new File(uploadPath + oldFileName);
+        file.delete(); //TODO
     }
 
 

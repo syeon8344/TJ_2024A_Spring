@@ -121,7 +121,7 @@ public class BoardService {
                 dto.setBfile(uploadFileName);
                 // 기존 파일 삭제
                 String oldFileName = boardDao.getFileName(dto.getBno());
-                fileService.deleteFile(oldFilePath);
+                fileService.deleteFile(oldFileName);
             }
         }
         return boardDao.bEdit(loginMno, dto);
