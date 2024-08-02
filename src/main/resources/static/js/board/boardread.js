@@ -6,6 +6,7 @@ let pageNo = parseInt(urlParams.get("page"))
 //if (isNaN(category)){category=0}
 viewPlus();
 boardRead();
+getReply();
 // 1. 조회수 증가
 function viewPlus(){
     $.ajax({
@@ -30,15 +31,47 @@ function writeReply(){
             // contentType : 'application/json' : JSON 객체 타입
             // contentType : false, processData : false --> contentType : multipart/form-data raw데이터 보낼 시 (첨부파일 등)
         success : r => {
-            alert("r = "+r)
             if (r) {
                 alert("댓글쓰기 성공")
                 document.querySelector(".brcontent").value = "";
+                window.location.reload();
             }
             else {alert("댓글쓰기 실패, 로그인 여부를 확인해 주세요")}
         }
     })
 
+}
+
+// 3. 댓글 출력
+function getReply(){
+    let html = ""
+    let replyBox = document.querySelector("#replyBox")
+    $.ajax({
+        async : false,
+        method : "GET",
+        url : "/board/reply",
+        data : {bno : currentBno},
+        success : r => {
+            let count = 0;
+            let count1 = 0;
+            for(let i = 0; i < r.length; i++){
+                if(r[i].brindex == 0){
+                    count++;
+                    html += `<div class="reply"><span>${count}</span> | <span>${r[i].name}</span> | <span>${r[i].brcontent}</span> | <span>${r[i].brdate}</span><div class = "innerreply${r[i].brno} innerreply"></div></div>`
+                }
+            };
+            replyBox.innerHTML = html;
+            for(let i = 0; i < r.length; i++){
+                if(r[i].brindex > 0){
+                    count1++;
+                    console.log(r[i]);
+                    let index = r[i].brindex
+                    let innerreply = document.querySelector(".innerreply"+index)
+                    innerreply.innerHTML = `<div><span>${count1}</span> | <span>${r[i].name}</span> | <span>${r[i].brcontent}</span> | <span>${r[i].brdate}</span></div>`
+                }
+            }
+        }
+    })
 }
 //2. 페이지 열릴 때 출력하기 + 수정페이지 가는 버튼
 function boardRead(){ // 어디에 무엇을 {boardNo : brdNo, title : bTitle, userId : uId, bDate : writtenDate, bView : view, bContent : content}

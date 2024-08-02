@@ -9,26 +9,34 @@
         CSS 파일
         <link rel='stylesheet' href="/css/boardread.css">
     -->
+    <style>
+        .innerreply {
+            margin-left: 50px;
+        }
+    </style>
 </head>
 <body>
     <div th:replace="~{/header.html :: header }"></div>
     <div class="container">
         <h3 class="my-3">글 상세 내용</h3>
-        <div class="col-9 mx-auto">
-            <div class="form-control">
-                <button type="button" class="btn btn-success my-3" onclick="goBack()">돌아가기</button>
-                <div class="form-control" id="boardBox">
+        <div class="form-control">
+            <button type="button" class="btn btn-success my-3" onclick="goBack()">돌아가기</button>
+            <div class="form-control" id="boardBox">
+            </div>
+            <div id="buttonBox">
+            </div>
+            <div id="replyAdd">
+                <div class="form-control my-3">
+                    <label for=".brcontent">댓글 작성하기</label>
+                    <textarea class="brcontent form-control" style="height: 200px;"></textarea>
+                    <button type="button" class="btn btn-success" onclick="writeReply()">댓글등록</button>
                 </div>
-                <div id="buttonBox">
-                </div>
-                <div id="replyBox">
-                    <textarea class="brcontent"></textarea>
-                    <button type="button" onclick="writeReply()">댓글등록</button>
-                </div>
+            </div>
+            <label for="#replybox">댓글 목록</label>
+            <div id="replyBox" class="form-control">
             </div>
         </div>
     </div>
-
     <script src="/js/board/boardread.js"></script>
     <div th:replace="~{/footer.html :: footer }"></div>
 </body>

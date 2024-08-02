@@ -190,6 +190,10 @@ public class BoardService {
         return boardDao.bReplyWrite(map); // DAO에서 DB 액세스하는 역할로 정해져있다
     }
 
+    public List<Map<String,String>> bReplyFindBno(int bno) {
+        return boardDao.bReplyFindBno(bno);
+    }
+
     // 로그인 체크
 /*    public MemberDto mLoginCheck() {
         // 1. 요청을 보낸 클라이언트의 세션 객체 호출

@@ -6,6 +6,8 @@ import web.model.dto.BoardDto;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -237,5 +239,29 @@ public class BoardDao extends Dao{
             System.out.println(e);
         }
         return false; // true/false booleaan값 반환
+    }
+
+    public List<Map<String, String>> bReplyFindBno(int bno) {
+        try{
+            List<Map<String, String>> list = new ArrayList<>();
+            String sql = "select breply.*, member.name from breply inner join member on breply.no = member.no where bno=? order by brno desc;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setLong(1, bno);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                Map<String,String> map = new HashMap<>();
+                map.put("brno", String.valueOf(rs.getInt("brno")));
+                map.put("brindex", String.valueOf(rs.getInt("brindex")));
+                map.put("brcontent", rs.getString("brcontent"));
+                map.put("brdate", rs.getString("brdate"));
+                map.put("name", rs.getString("name"));
+                list.add(map);
+            }
+            System.out.println("list = "+list);
+            return list;
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
     }
 }   // class end

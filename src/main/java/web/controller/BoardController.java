@@ -7,6 +7,7 @@ import web.model.dto.BoardPageDto;
 import web.service.BoardService;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/board")
@@ -75,11 +76,12 @@ public class BoardController {
     public boolean authorize(int bno){
         return boardService.authorize(bno);
     }
-//    // 게시물 댓글
-//    @GetMapping("/")
-//    public BoardDto bFindBno(int bno){
-//        return boardService.bFindBno(bno);
-//    }
+    // 게시물 댓글
+    @GetMapping("/reply")
+    public List<Map<String,String>> bReplyFindBno(int bno){
+        System.out.println("BoardController.bReplyFindBno" + bno);
+        return boardService.bReplyFindBno(bno);
+    }
     // 게시물 쓰기
     @PostMapping ("/reply/write")// DB 추가이므로 POST
     public boolean bReplyWrite(@RequestBody Map<String, String> map){
@@ -88,4 +90,5 @@ public class BoardController {
         System.out.println(map);
         return boardService.bReplyWrite(map); // 데이터 가공 및 DAO 처리는 Service 클래스에서 (Spring MVC)
     }
+
 }   // class end
