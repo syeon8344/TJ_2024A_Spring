@@ -10,6 +10,7 @@ import web.model.dto.MemberDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BoardService {
@@ -167,6 +168,26 @@ public class BoardService {
             loginMno=loginDto.getNo();
         }
         return boardDao.authorize(bno, loginMno);
+    }
+
+    // 게시물 댓글 쓰기 처리
+    // controller 에서 넘어온 함수이므로 @Mapping X
+    public boolean bReplyWrite(Map<String, String> map) {
+        System.out.println("map = " + map);
+        // no는 입력받지 않는다
+            // HTTP 세션에서 가져오기 (회원제 댓글이라는 가정)
+            // 세션 : 서버에 저장되는 임시저장소, 서버 종료나 세션 초기화시 사라지므로 매번 로그인할 때 생성되는 방식으로 적합
+
+        // 로그인 체크 및 no 얻어오기
+        Object object = memberService.mLoginCheck();
+            // 세션은 무조건 Object타입으로 저장
+        if (object==null){return false;}
+        MemberDto loginDto = (MemberDto) object;
+        int no = loginDto.getNo();
+        map.put("no", String.valueOf(no));// map 제네릭이 String : String이므로 int no를 String변환
+
+
+        return boardDao.bReplyWrite(map); // DAO에서 DB 액세스하는 역할로 정해져있다
     }
 
     // 로그인 체크

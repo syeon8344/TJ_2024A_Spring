@@ -7,6 +7,7 @@ import web.model.dto.BoardPageDto;
 import web.service.BoardService;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @RequestMapping("/board")
 @RestController
@@ -73,5 +74,18 @@ public class BoardController {
     @GetMapping("/authorize")
     public boolean authorize(int bno){
         return boardService.authorize(bno);
+    }
+//    // 게시물 댓글
+//    @GetMapping("/")
+//    public BoardDto bFindBno(int bno){
+//        return boardService.bFindBno(bno);
+//    }
+    // 게시물 쓰기
+    @PostMapping ("/reply/write")// DB 추가이므로 POST
+    public boolean bReplyWrite(@RequestBody Map<String, String> map){
+        // @RequestBody : HTTP 요청 수신시 HTML Body에서 오는 데이터 타입에 맞도록 한다
+        // String 키 String 밸류의 집합 = MAP, 미리 키값을 알고 있지 않아도 수신 가능
+        System.out.println(map);
+        return boardService.bReplyWrite(map); // 데이터 가공 및 DAO 처리는 Service 클래스에서 (Spring MVC)
     }
 }   // class end

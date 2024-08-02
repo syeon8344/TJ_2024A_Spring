@@ -15,6 +15,31 @@ function viewPlus(){
         data : {bno : currentBno},
     })
 }
+// 2. 댓글 쓰기
+function writeReply(){
+    // 1. 값 가져오기
+    let brcontent = document.querySelector(".brcontent").value
+    let bno = pageNo
+    let brindex = 0
+
+    $.ajax({
+        method : "POST", url : "/board/reply/write",
+        data : JSON.stringify({brindex:0, brcontent : brcontent, bno : currentBno}), // 문자열화 JSON 데이터 객체
+        contentType : "application/json",
+            // contentType : "application/x-www-form-urlencoded" : AJAX 기본값 (contentType 생략시)
+            // contentType : 'application/json' : JSON 객체 타입
+            // contentType : false, processData : false --> contentType : multipart/form-data raw데이터 보낼 시 (첨부파일 등)
+        success : r => {
+            alert("r = "+r)
+            if (r) {
+                alert("댓글쓰기 성공")
+                document.querySelector(".brcontent").value = "";
+            }
+            else {alert("댓글쓰기 실패, 로그인 여부를 확인해 주세요")}
+        }
+    })
+
+}
 //2. 페이지 열릴 때 출력하기 + 수정페이지 가는 버튼
 function boardRead(){ // 어디에 무엇을 {boardNo : brdNo, title : bTitle, userId : uId, bDate : writtenDate, bView : view, bContent : content}
     let boardBox = document.querySelector("#boardBox")

@@ -1,3 +1,4 @@
+create database springweb;
 use springweb;
 # 1. 게시물 카테고리
 drop table if exists bcategory;
@@ -27,6 +28,19 @@ create table board(
 );
 select *from board;
 
+# 3. 게시글 댓글
+drop table if exists breply;
+create table breply(
+	brno bigint unsigned auto_increment,				# 댓글번호PK
+    brindex int,				# 댓글 Z-인덱스 : 댓글 위치 분류, 0. 최상위댓글, 1이상. brno 참조하는 상위댓글번호
+	brcontent varchar(255), # 댓글내용
+    brdate datetime default now(), # 작성일
+    no bigint, 				# 작성자FK
+    bno bigint unsigned,				# 게시물번호FK
+    primary key (brno),
+	foreign key (no) references member(no) on delete cascade on update cascade,
+    foreign key (bno) references board(bno) on delete cascade on update cascade
+);
 #샘플
 insert into board(btitle,bcontent,no,bcno) values("테스트제목1","테스트내용1",1,1);
 insert into board(btitle,bcontent,no,bcno) values("테스트제목2","테스트내용2",1,2);

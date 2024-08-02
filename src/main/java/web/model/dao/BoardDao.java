@@ -6,6 +6,7 @@ import web.model.dto.BoardDto;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Map;
 
 @Component
 public class BoardDao extends Dao{
@@ -217,5 +218,24 @@ public class BoardDao extends Dao{
             System.out.println(e);
         }
         return null;
+    }
+
+    public boolean bReplyWrite(Map<String, String> map) {
+        System.out.println("map = " + map);
+        try{
+            // brindex : 댓글 Z-index, brcontent : 댓글내용, no : 회원번호, bno : 게시물번호(댓글 위치한 게시물)
+            String sql = "insert into breply(brindex,brcontent,no,bno) values(?,?,?,?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(map.get("brindex"))); // value도 String이므로 Integer.parseInt()로 int화 필요
+            ps.setString(2, map.get("brcontent"));
+            ps.setInt(3, Integer.parseInt(map.get("no")));
+            ps.setInt(4, Integer.parseInt(map.get("bno")));
+
+            int count = ps.executeUpdate();
+            return count==1;
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return false; // true/false booleaan값 반환
     }
 }   // class end
