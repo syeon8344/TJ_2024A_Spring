@@ -33,6 +33,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     // [6] JAVA Mail Sender
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 }
 
 tasks.named('test') {
