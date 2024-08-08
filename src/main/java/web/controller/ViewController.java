@@ -80,8 +80,15 @@ public class ViewController {
     }
 
     // ======== product 관련 ==============
+    // 제품등록
     @GetMapping("/product/register")
     public String prodRegister(){
         return "/product/register.html";
+    }
+
+    // 제품목록조회
+    @GetMapping("/product")
+    public String product(){
+        return "/product/product.html";
     }
 }

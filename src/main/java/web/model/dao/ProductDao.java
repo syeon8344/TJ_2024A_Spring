@@ -67,6 +67,7 @@ public class ProductDao extends Dao{
             ResultSet rs = ps.executeQuery();
             while(rs.next()){ // 2. 각 제품마다 이미지 목록 조회, select 루프 : pno
                 ProductDto dto = ProductDto.builder() // dto builder
+                        .pno(rs.getInt(1))
                         .pname(rs.getString(2))
                         .pcontent(rs.getString(3))
                         .pprice(rs.getInt(4))

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>제품목록</title>
+    <style>
+        .imageTd{
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="~{/header.html :: header }"></div>
+        <div class="container">
+            <button type="button" class="btn btn-success my-3" onclick="location.href='/product/register'">제품 등록하기</button>
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>제품번호</th><th>제품명</th><th>제품설명</th><th>제품가격</th><th>제품등록일시</th><th>제품조회수</th><th>제품이미지</th>
+                        </tr>
+                    </thead>
+                    <tbody id="imageBox">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <script src="/js/product/product.js"></script>
+    <div th:replace="~{/footer.html :: footer }"></div>
+</body>
+</html>

@@ -16,6 +16,8 @@ public class ProductDto {
     private List<MultipartFile> files;
     // 첨부파일 이름들
     private List<String> fileNames;
+    // 제품코드
+    private int pno;
     // 제품명
     private String pname;
     // 제품설명

@@ -19,18 +19,12 @@ function onRegister(){
         data : productFormData,
         success : r => {
             console.log("success " + r);
-            
+            alert("제품 등록 완료.")
         },
         error : e => {
             console.log("error " + e);
-            
+            alert("제품 등록 실패.")
         }
     })
 
-    // 4. 등록 완료후 이미지 띄우기
-    let imageBox = document.querySelector("#imageBox")
-    let imageHtml = ""
-    $.ajax({
-        
-    })
 }

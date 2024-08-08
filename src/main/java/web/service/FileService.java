@@ -14,8 +14,20 @@ import java.util.UUID;
 
 @Service
 public class FileService {
-    // 2. 저장할 경로 만들기 (전역변수)
-    String uploadPath = "C:\\Users\\tj-bu-703-06\\Desktop\\TJ_2024A_Spring\\src\\main\\resources\\static\\upload\\";
+    /*
+        프로젝트명
+            - build 폴더 : 배포된 클래스/파일 등
+            - src 폴더 : 배포 전 개발자가 코드 및 파일 작성하는 곳
+        빌드 : 내 코드를 웹서버에 올림/빌드함으로써 외부(클라이언트)로부터 리소스 제공 가능
+    */
+    // 2. 저장할 경로 만들기 (전역변수) * 개발자 코드 프로젝트의 upload 폴더 != 내장 웹서버의 upload 폴더
+        // build 폴더 : 빌드된 웹서버의 폴더
+    // 개발자 코드 프로젝트의 upload 폴더 (src->upload)
+    // String uploadPath = "C:\\Users\\tj-bu-703-06\\Desktop\\TJ_2024A_Spring\\src\\main\\resources\\static\\upload\\";
+    // 내장 웹서버의 upload 폴더 위치 (build->upload)
+    String uploadPath = "C:\\Users\\tj-bu-703-06\\Desktop\\TJ_2024A_Spring\\build\\resources\\main\\static\\upload\\";
+
+
     // [1] 파일 업로드
         // 매개변수로 파일의 바이트가 저장된 MultipartFile 인터페이스
         // 업로드된 파일명 반환
