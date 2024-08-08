@@ -56,9 +56,11 @@ public class BoardController {
     public void bView(int bno){
         boardService.bView(bno);
     }
+
     // 5-1. 글 수정 권한 확인
     @GetMapping("/edit/check")
     public boolean bEditCheck(int bno) {return boardService.bEditCheck(bno);}
+
     // 5. 글 수정
     @PutMapping("/edit")
     public boolean bEdit(@RequestBody BoardDto dto){
@@ -76,13 +78,15 @@ public class BoardController {
     public boolean authorize(int bno){
         return boardService.authorize(bno);
     }
+
+
     // 게시물 댓글
     @GetMapping("/reply")
     public List<Map<String,String>> bReplyFindBno(int bno){
         System.out.println("BoardController.bReplyFindBno" + bno);
         return boardService.bReplyFindBno(bno);
     }
-    // 게시물 쓰기
+    // 게시물 댓글 쓰기
     @PostMapping ("/reply/write")// DB 추가이므로 POST
     public boolean bReplyWrite(@RequestBody Map<String, String> map){
         // @RequestBody : HTTP 요청 수신시 HTML Body에서 오는 데이터 타입에 맞도록 한다

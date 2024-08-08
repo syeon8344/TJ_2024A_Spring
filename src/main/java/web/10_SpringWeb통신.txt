@@ -1,68 +1,116 @@
-이전) 아파치(정적파일 서버) 톰캣 (동적파일 서버)
+[1] HTTP : 하이퍼텍스트 통신 규약
+    - 상태가 무상재 프로토콜 이다.
+    - 독립적이다 , 데이터 주고 받기 위한 각각의 데이터 요청과 응답
+    - HTTP1.1 ( 주로 사용되는 버전 )
+    - 경로 : 통신할 웹 자원 위치
+        http://localhost:8080/board/view?bno=3
+        1. URL : 웹 주소 , 네트워크 상의 리소스가 어디에 있는지 알려주는 규약
+            http://localhost:8080/board/view
+        2. URI : 각종 정보들의 유일한 이름이나 위치를 표시하는 규약
+            *쿼리스트링 방식  : http://localhost:8080/board/view?bno=3
+            경로매개변수 방식 : http://localhost:8080/board/view/3
+            내부위치이동 방식 : http://localhost:8080/board/view#id명
 
-템플릿
-    - 정적 파일 : HTML, JS, CSS, Img 등 (관리 : 정적 서버)
-        - Spring 정적 파일 위치 : 프로젝트 main > resources > static
-        - Controller 필요 X, 파일의 경로/파일명이 해당 리소스/파일의 URL로 자동 경로 설정
-            - 브라우저(크롬 등)은 정적 파일 형식을 읽을 수 있고 HTTP로도 이동 가능
-            - 순수 HTML 등 형식 파일이므로 변환/렌더링 필요 X
-    - 동적 파일 : JSP, *Thymeleaf, Mustache
-        - Spring 동적 파일 위치 : 프로젝트 main > resources > templates
-        - HTML + JAVA 문법 파일 -> HTTP 통신 시 순수 HTML로 렌더링 필요
-        - Controller 매핑 필요 ( URL 경로 자동설정 X)
-            - 브라우저(크롬 등)은 동적 파일 형식을 읽을 수 없고 HTTP로 이동 불가
-            - 변환이나 렌더링이 필요하므로 컨트롤러 필요
-            - 서버가 동적 파일을 HTML로 렌더링해서 응답하는 구조
-    -> 아파치 톰캣 (정적 + 동적 파일 관리)
+    - HTTPS : HTTP의 보안이 강화된 버전이다.
+        - 통신의 인증과 암호화를 위해 만들어진 프로토콜
+        - 인증서 발급 업체로 부터 인증서 발급 받는다. ex) 건강보험 , 자동차보험
+        - 해당 웹페이지에서 문제 발생시 보상해주는 보험 같은 개념
 
-타임리프 :
-    - 서버의 자원(데이터) 통신은 JS를 사용하기 때문에 종류는 상관없음
-    - 타임리프 설치 : build.gradle의 dependencies에
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    - 타임리프 확장자 : .html
-    - 강의에서 타임리프 사용 이유 : 레이아웃
+[1-1] HTTP Header ( HTTP 통신 정보 )
+        1. host : 요청이 전송되는 타켓의 url 주소 , 해당 자원을 가지고 있는 주인 , 웹서버 주소
+        2. contentType : 요청 과 응답 보내는 데이터의 type 타입 정보 , 받는 측에서 데이터를 어떻게(분석,파싱) 처리 할지 판단한다.
+            - application/json , text/html , application/x-www-form-urlencoded , multipart/formed-data 등등
+        3. body : 데이터 본문
+            - POST, PUT 사용가능 , GET, DELETE 사용불가능
 
-타임리프 레이아웃
-    templates
-        member 패키지/폴더
-            - signup.html : 회원가입 페이지
-            - login.html : 로그인 페이지
-        - header.html : 헤더 페이지
-        - index.html : 메인 페이지
-        - footer.html : 푸터 페이지
+[1-2] HTTP METHOD
+    1. GET      : REST API 에서는 주로 자원 호출 요청 [ R ]
+    2. POST     : REST API 에서는 주로 자원 저장 요청 [ C ]
+    3. PUT      : REST API 에서는 주로 자원 수정 요청 [ U ]
+    4. DELETE   : REST API 에서는 주로 자원 삭제 요청 [ D ]
 
-타임리프 레이아웃 문법
-    [1] 다른파일(html)에서 사용할 구역에 플러그 정의
-        <마크업 th:fragment="플러그명"> </마크업>
-        header.html ---> <body th:fragment="header">
+[1-3] HTTP 사용하는 소프트웨어 , 라이브러리 , 프레임워크
+    1. 브라우저(크롬,엣지,사파리) 2. JQUERY(AJAX) 3.아파치톰캣 4.Spring @Controller 5.Talend Api
 
-    [2] 해당파일(html) 에서 다른파일(html)의 플러그 불러오기
-        <마크업 th:replace="~{ 불러올파일경로 :: 플러그명 }" ></마크업>
-        index.html  ---> <div th:replace="~{ /header.html :: header }"></div>
+* 데이터 와 타입
+    - 데이터/자료 : 순수한 정보
+    - 타입 : 정보의 분류 , 자료 의 식별 , 자원의 사용시 해당 자원의 사용방법를 정의
+        - JAVA : String타입 -> "3"  , int타입 -> 3 , byte타입 -> 3
+
+* REST API : URL 이용한 자원의 상태를 주고 받는 구조/아키텍처
+
+* 쿼리스트링 과 BODY
+    - 편지봉투 : 보낸 사람 , 받는 사람
+    - 편지지 : 내용물
+    ex1 ] POST , BODY O
+        편지봉투 : 받는 사람 : http://localhost:8080/board/view
+        편지지 : { bno : 3 }
+    ex2 ] GET , BODY X
+        편지봉투 : 받는 사람 : http://localhost:8080/board/view?bno=3
+        편지지 : x
+    - 쿼리스트링 : URL 상의 자원의정보가 노출이 된다. ( 보안X )
+    - BODY : URL 상의 자원의정보가 노출이 안된다. ( 보안O ) , 개인정보 존재하는 데이터는 POST,PUT 사용한다.
+
+* HTTP 통신 예시
+    생활속예시]
+        핸드폰(전화) <---------> 핸드폰(전화) ,
+        공중전화기(전화) <---------> 핸드폰(전화) ,
+        집전화(전화) <--------> 핸드폰(전화)
+    ex1] AJAX ( http ) <-------------> 아파치 톰캣 서버 ( http )
+    ex2] 크롬브라우저 ( http ) <-------------->아파치 톰캣 서버 ( http )
+    ex3] Talend Api( http ) <-------------->아파치 톰캣 서버 ( http )
 
 
-// 과제
-    회원가입 구현
-        [1] DB 설계 (강의 카톡 SQL 사용)
-        [2] MemberDto 클래스 (+Lombok)
-        [3] MemberController에서 회원가입 구현 (HTTP 매핑 테스트)
-            회원가입 REST : POST, /member/signup
-        [4] MemberService에서 회원가입 구현 (SpringMVC 빈 사용)
-        [5] MemberDao에서 회원가입 구현
-        =========== 프론트/백엔드 ===========
-        [6] Talend API 테스트 진행
-        ====================================
-        [7] AJAX 회원가입 구현
-            - 성공시 '회원가입성공', 실패시 '회원가입실패' alert 출력
-    내정보 구현
-        [1] MemberController에서 내정보 메서드
-            GET, /member/my/info
-            로그인 세션 활용
-        [2] MemberService 내정보 메서드
-        [3] MemberDao 내정보 메서드
-        ====================================
-        [4] templates --> member 폴더내 myinfo.html
-        [5] ViewController에서 해당 템플릿 매핑
-            GET /member/mypage
-        [6] header.html에서 <a>링크 연결
-        [7] ajax 구현
+[2] 웹 서버
+    - 클라이언트의 요청으로부터 자원을 응답하는 컴퓨터/소프트웨어
+    - 종류 : 정적 서버(static pages) , 동적 서버(dynamic pages)
+        - 정적 서버 : html , css , js , img 등등 파일들 , 아파치 서버 프로그램
+        - 동적 서버 : servlet , jsp, 타임리프(html), 머스테치 등등 파일들 , 톰캣 서버 프로그램
+        - 아파치 톰캣 서버 프로그램 : 정적서버 와 동적 서버 동시에 지원한다.
+
+[2-1] WAS : Web Application Server
+    - 개념
+        1. Web 서버 프로그램이 설치된 컴퓨터
+        2. http 로 부터 요청을 받아 정적/동적 파일 제공하는 컴퓨터
+        3. 클라이언트의 요청을 WAS에게 보내고 WAS에서 처리한 결과를 클라이언트에게 전달하는 방식
+        4. WAS는 웹서버, 웹컨테이너 , 서블릿 컨테이너 라 고도 불린다.
+    - 역할
+        1. Web server(정적파일) + Web Container(동적파일)
+        2. 비지니스/서비스 로직 수행
+        3. 여러개 요청를 관리 기능
+[2-2] 동작 구조
+    1. 클라이언트가 HTTP 이용한 WAS 에게 요청을 보낸다.
+    2. AWS는 관련된 Servlet을 최초 요청시 생성[ init() ] 또는 할당 한다.
+    3. 스레드 생성 또는 할당 받는다.
+    4. HttpServletRequest , HttpServletResponse 객체를 생성 한다.
+    5. 스레드는 servlet service 메소드 호출한다.
+    6. service 메소드는 각 http method 요청에 맞게 doGet() , doPost() 등등 메소드를 호출한다.
+    7. doGet() 또는 doPost()는 HttpServletRequest , HttpServletResponse 매개변수 받아서 요청/응답 정보를 확인할수 있다.
+    8. HttpServletResponse 객체를 이용한 Web server 에게 응답 데이터 전달한다.
+    9. 생성된 스레드는 종료하고, HttpServletRequest , HttpServletResponse 객체도 제거한다.
+        - * Servlet 객체는 제거하지 않는다. 나중에 재호출 재사용 하기 위해 제거하지 않는다.
+
+Client ----- HTTP ----> was( 웹서버 )
+    - 브라우저              web server  --------->  web container   ---- 스레드 생성/할당 ---> 서블릿 생성
+    - ajax                  - 정적파일                  - 동적 파일                             - init()
+    - 모바일                                                                                  - service() ----> doGet(),doPost() ----> 추후 작업
+                                                                                             - destroy()
+      <----- HTTP ----                 <-----------
+
+
+[2-3] 서블릿 의 생명주기
+    1. 메소드
+    - init() : 해당 서블릿의 초기화 작업을 하는 메소드 , 서블릿 당 1번 실행
+    - service() : 해당 서블릿이 사용자에게 서비스하기 위해 정의한 메소드, 클라이언트 요청 마다 실행
+        - doGet() , doPost() , doPut() , doDelete() 에게 연결
+    - doXXX() : 비지니스 로직 처리 , DB 처리
+    - destroy() : 해당 서블릿이 메모리에게 해제 , 서버가 종료될때 실행
+
+    2. 생명 순서
+        1. 사용자로부터 요청이 들어오면 컨테이너로 요청 정보가 전해진다.
+        2. 컨테이너 배포서술사(xml) 의 서블릿 맵핑 정보를 참조하여 해당 서블릿을 찾는다.
+            만약에 최초 요청이면 서블릿 객체 생성 -> init()
+            최초 요청이 아니면 맵핑 정보를 찾아 서블릿 객체 요청 한다.
+        3. class loading
+        4. 요청에 대한 응답 처리
+        5. 서블릿 객체 소멸 (서버가 종료될때)

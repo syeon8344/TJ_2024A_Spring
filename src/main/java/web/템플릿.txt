@@ -1,0 +1,68 @@
+이전) 아파치(정적파일 서버) 톰캣 (동적파일 서버)
+
+템플릿
+    - 정적 파일 : HTML, JS, CSS, Img 등 (관리 : 정적 서버)
+        - Spring 정적 파일 위치 : 프로젝트 main > resources > static
+        - Controller 필요 X, 파일의 경로/파일명이 해당 리소스/파일의 URL로 자동 경로 설정
+            - 브라우저(크롬 등)은 정적 파일 형식을 읽을 수 있고 HTTP로도 이동 가능
+            - 순수 HTML 등 형식 파일이므로 변환/렌더링 필요 X
+    - 동적 파일 : JSP, *Thymeleaf, Mustache
+        - Spring 동적 파일 위치 : 프로젝트 main > resources > templates
+        - HTML + JAVA 문법 파일 -> HTTP 통신 시 순수 HTML로 렌더링 필요
+        - Controller 매핑 필요 ( URL 경로 자동설정 X)
+            - 브라우저(크롬 등)은 동적 파일 형식을 읽을 수 없고 HTTP로 이동 불가
+            - 변환이나 렌더링이 필요하므로 컨트롤러 필요
+            - 서버가 동적 파일을 HTML로 렌더링해서 응답하는 구조
+    -> 아파치 톰캣 (정적 + 동적 파일 관리)
+
+타임리프 :
+    - 서버의 자원(데이터) 통신은 JS를 사용하기 때문에 종류는 상관없음
+    - 타임리프 설치 : build.gradle의 dependencies에
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    - 타임리프 확장자 : .html
+    - 강의에서 타임리프 사용 이유 : 레이아웃
+
+타임리프 레이아웃
+    templates
+        member 패키지/폴더
+            - signup.html : 회원가입 페이지
+            - login.html : 로그인 페이지
+        - header.html : 헤더 페이지
+        - index.html : 메인 페이지
+        - footer.html : 푸터 페이지
+
+타임리프 레이아웃 문법
+    [1] 다른파일(html)에서 사용할 구역에 플러그 정의
+        <마크업 th:fragment="플러그명"> </마크업>
+        header.html ---> <body th:fragment="header">
+
+    [2] 해당파일(html) 에서 다른파일(html)의 플러그 불러오기
+        <마크업 th:replace="~{ 불러올파일경로 :: 플러그명 }" ></마크업>
+        index.html  ---> <div th:replace="~{ /header.html :: header }"></div>
+
+
+// 과제
+    회원가입 구현
+        [1] DB 설계 (강의 카톡 SQL 사용)
+        [2] MemberDto 클래스 (+Lombok)
+        [3] MemberController에서 회원가입 구현 (HTTP 매핑 테스트)
+            회원가입 REST : POST, /member/signup
+        [4] MemberService에서 회원가입 구현 (SpringMVC 빈 사용)
+        [5] MemberDao에서 회원가입 구현
+        =========== 프론트/백엔드 ===========
+        [6] Talend API 테스트 진행
+        ====================================
+        [7] AJAX 회원가입 구현
+            - 성공시 '회원가입성공', 실패시 '회원가입실패' alert 출력
+    내정보 구현
+        [1] MemberController에서 내정보 메서드
+            GET, /member/my/info
+            로그인 세션 활용
+        [2] MemberService 내정보 메서드
+        [3] MemberDao 내정보 메서드
+        ====================================
+        [4] templates --> member 폴더내 myinfo.html
+        [5] ViewController에서 해당 템플릿 매핑
+            GET /member/mypage
+        [6] header.html에서 <a>링크 연결
+        [7] ajax 구현

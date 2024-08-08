@@ -78,4 +78,10 @@ public class ViewController {
     public String api(){
         return "/api/datago.html";
     }
+
+    // ======== product 관련 ==============
+    @GetMapping("/product/register")
+    public String prodRegister(){
+        return "/product/register.html";
+    }
 }
